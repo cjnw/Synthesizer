@@ -5,6 +5,8 @@ using namespace std;
 #include "msxml2.h"
 #include "Instrument.h"
 #include "Note.h"
+#include "Effect.h"
+
 class CSynthesizer
 {
 public:
@@ -34,6 +36,9 @@ public:
 	void XmlLoadScore(IXMLDOMNode * xml);
 	void XmlLoadInstrument(IXMLDOMNode * xml);
 	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
+
+	void AddEffect(Effect* effect);
+	void ApplyEffects(double* in, double* out);
 private:
 	int		m_channels;
 	double	m_sampleRate;
@@ -46,6 +51,7 @@ private:
 	double m_beat;              //!< The current beat within the measure
 	std::list<CInstrument *>  m_instruments;
 	std::vector<CNote> m_notes;
+	std::vector<Effect*> m_effects; 
 public:
 	void Start();
 	bool Generate(double*);

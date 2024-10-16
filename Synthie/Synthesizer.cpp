@@ -147,6 +147,22 @@ bool CSynthesizer::Generate(double * frame)
 		// Move to the next instrument in the list
 		node = next;
 	}
+
+
+	// Phase 3-effect: Apply effects
+	double effectFrame[2];
+	ApplyEffects(frame, effectFrame);
+
+	for (int c = 0; c < m_channels; c++)
+	{
+		frame[c] = effectFrame[c];
+	}
+
+
+
+
+
+
 	//
 	// Phase 4: Advance the time and beats
 	//
@@ -341,4 +357,24 @@ void CSynthesizer::XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument)
 {
 	m_notes.push_back(CNote());
 	m_notes.back().XmlLoad(xml, instrument);
+}
+
+
+void CSynthesizer::AddEffect(Effect* effect)
+{
+	m_effects.push_back(effect);
+}
+
+void CSynthesizer::ApplyEffects(double* inputFrame, double* outputFrame)
+{
+	double tempFrame[2] = { inputFrame[0], inputFrame[1] };
+
+	for (auto effect : m_effects)
+	{
+		double effectOutput[2] = { 0, 0 };
+		effect->Process(tempFrame, effectOutput);
+		// Mix effect output with input
+		outputFrame[0] += effectOutput[0];
+		outputFrame[1] += effectOutput[1];
+	}
 }

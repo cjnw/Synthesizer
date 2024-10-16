@@ -2,7 +2,7 @@
 class CAudioNode
 {
 public:
-	CAudioNode();
+	CAudioNode(); 
 	CAudioNode(double bpm);
 
 	virtual ~CAudioNode();
@@ -20,7 +20,7 @@ public:
 	double GetSamplePeriod() { return m_samplePeriod; }
 
 	//! Set the sample rate
-	void SetSampleRate(double s) { m_sampleRate = s;  m_samplePeriod = 1 / s; }
+	void SetSampleRate(double s) { m_sampleRate = s; m_samplePeriod = 1 / s; }
 
 	//! Access a generated audio frame
 	const double *Frame() { return m_frame; }

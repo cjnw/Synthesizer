@@ -33,9 +33,9 @@ CSynthesizer::CSynthesizer()
 
 	// Set parameters (adjust values as desired)
 	reverb->SetRoomSize(1.0);  // Room size between 0.0 and 1.0
-	reverb->SetDamping(0.0);   // Damping between 0.0 (no damping) and 1.0 (full damping)
-	reverb->SetWet(1.0);       // Wet mix level between 0.0 and 1.0
-	reverb->SetDry(0.1);       // Dry mix level between 0.0 and 1.0
+	reverb->SetDamping(0.5);   // Damping between 0.0 (no damping) and 1.0 (full damping)
+	reverb->SetWet(.5);       // Wet mix level between 0.0 and 1.0
+	reverb->SetDry(0.5);       // Dry mix level between 0.0 and 1.0
 
 	// Add the effect to the synthesizer
 	AddEffect(reverb);

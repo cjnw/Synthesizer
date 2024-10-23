@@ -5,7 +5,8 @@
 #include "xmlhelp.h"
 #include <vector>
 #include <algorithm>
-
+#include "EchoEffect.h"
+#include "ReverbEffect.h"
 CSynthesizer::CSynthesizer()
 : m_time(0)
 {
@@ -16,6 +17,29 @@ CSynthesizer::CSynthesizer()
 	m_bpm = 120;            
 	m_beatspermeasure = 4;
 	m_secperbeat = 0.5;     
+
+
+	// Example of adding an Echo effect
+	EchoEffect* echo = new EchoEffect();
+	echo->SetDelay(2.5); // Set delay time to 0.5 seconds
+	echo->SetWet(1.0);   // Set wet level
+	echo->SetDry(0.1);   // Set dry level
+
+	//AddEffect(echo);
+
+
+	// Create the effect
+	ReverbEffect* reverb = new ReverbEffect();
+
+	// Set parameters (adjust values as desired)
+	reverb->SetRoomSize(1.0);  // Room size between 0.0 and 1.0
+	reverb->SetDamping(0.0);   // Damping between 0.0 (no damping) and 1.0 (full damping)
+	reverb->SetWet(1.0);       // Wet mix level between 0.0 and 1.0
+	reverb->SetDry(0.1);       // Dry mix level between 0.0 and 1.0
+
+	// Add the effect to the synthesizer
+	AddEffect(reverb);
+
 }
 
 
@@ -44,6 +68,14 @@ void CSynthesizer::Start()
 	m_measure = 0;
 	m_beat = 0;
 	m_time = 0;
+
+	// Start all effects
+	for (auto effect : m_effects)
+	{
+		effect->SetSampleRate(GetSampleRate());
+		effect->Start();
+	}
+
 }
 
 

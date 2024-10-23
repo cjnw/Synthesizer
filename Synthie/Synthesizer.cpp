@@ -21,11 +21,10 @@ CSynthesizer::CSynthesizer()
 
 	// Example of adding an Echo effect
 	EchoEffect* echo = new EchoEffect();
-	echo->SetDelay(2.5); // Set delay time to 0.5 seconds
-	echo->SetWet(1.0);   // Set wet level
-	echo->SetDry(0.1);   // Set dry level
+	echo->SetDelay(.5); // Set delay time to 0.5 seconds
+	echo->SetWet(0.5);   // Set wet level
+	echo->SetDry(0.5);   // Set dry level
 
-	//AddEffect(echo);
 
 
 	// Create the effect
@@ -37,8 +36,10 @@ CSynthesizer::CSynthesizer()
 	reverb->SetWet(.5);       // Wet mix level between 0.0 and 1.0
 	reverb->SetDry(0.5);       // Dry mix level between 0.0 and 1.0
 
-	// Add the effect to the synthesizer
+	// Add the effects to the synthesizer
 	AddEffect(reverb);
+    AddEffect(echo);
+
 
 }
 

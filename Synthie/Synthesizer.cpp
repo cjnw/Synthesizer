@@ -21,6 +21,12 @@ CSynthesizer::CSynthesizer()
 
 CSynthesizer::~CSynthesizer()
 {
+	// Delete effects
+	for (auto effect : m_effects)
+	{
+		delete effect;
+	}
+	m_effects.clear();
 }
 
 //! Start the synthesizer
@@ -43,15 +49,7 @@ void CSynthesizer::Start()
 
 bool CSynthesizer::Generate(double * frame)
 {
-	/*double sample = 0.1 * sin(2 * PI * 440 * GetTime());
 
-	for (int c = 0; c<GetNumChannels(); c++)
-	{
-		frame[c] = sample;
-	}
-
-	m_time += GetSamplePeriod();
-	return m_time < 5;*/
 
 	//
 	// Phase 1: Determine if any notes need to be played.
@@ -150,12 +148,13 @@ bool CSynthesizer::Generate(double * frame)
 
 
 	// Phase 3-effect: Apply effects
-	double effectFrame[2];
+	double effectFrame[2] = { 0.0, 0.0 };
 	ApplyEffects(frame, effectFrame);
 
+	// Copy the effectFrame back to frame
 	for (int c = 0; c < m_channels; c++)
 	{
-		//frame[c] = effectFrame[c];
+		frame[c] = effectFrame[c];
 	}
 
 
@@ -362,19 +361,27 @@ void CSynthesizer::XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument)
 
 void CSynthesizer::AddEffect(Effect* effect)
 {
+	effect->SetSampleRate(GetSampleRate());
 	m_effects.push_back(effect);
 }
 
 void CSynthesizer::ApplyEffects(double* inputFrame, double* outputFrame)
 {
+	// Initialize tempFrame with the inputFrame
 	double tempFrame[2] = { inputFrame[0], inputFrame[1] };
 
+	// Process each effect in order
 	for (auto effect : m_effects)
 	{
-		double effectOutput[2] = { 0, 0 };
+		double effectOutput[2] = { 0.0, 0.0 };
 		effect->Process(tempFrame, effectOutput);
-		// Mix effect output with input
-		outputFrame[0] += effectOutput[0];
-		outputFrame[1] += effectOutput[1];
+
+		// Update tempFrame for the next effect
+		tempFrame[0] = effectOutput[0];
+		tempFrame[1] = effectOutput[1];
 	}
+
+	// The final output is in tempFrame
+	outputFrame[0] = tempFrame[0];
+	outputFrame[1] = tempFrame[1];
 }

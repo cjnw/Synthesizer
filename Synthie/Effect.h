@@ -1,20 +1,16 @@
 #pragma once
+
 class Effect
 {
 public:
-	Effect() : wetMix(0.5), dryMix(0.5) {}
-	virtual ~Effect() {}
+    Effect() : m_sampleRate(44100.0) {}
+    virtual ~Effect() {}
 
-	virtual void Process(double* input, double* output) = 0;
+    virtual void Start() {}
+    virtual void Process(double* input, double* output) = 0;
 
-	void SetWetMix(double mix) { wetMix = mix; }
-	void SetDryMix(double mix) { dryMix = mix; }
+    void SetSampleRate(double sampleRate) { m_sampleRate = sampleRate; }
 
 protected:
-	double wetMix;
-	double dryMix;
-
-
-
+    double m_sampleRate;
 };
-

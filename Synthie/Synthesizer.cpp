@@ -155,7 +155,7 @@ bool CSynthesizer::Generate(double * frame)
 
 	for (int c = 0; c < m_channels; c++)
 	{
-		frame[c] = effectFrame[c];
+		//frame[c] = effectFrame[c];
 	}
 
 

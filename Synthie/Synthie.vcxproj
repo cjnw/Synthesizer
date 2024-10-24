@@ -132,6 +132,7 @@
     <ClCompile Include="audio\DirSoundSource.cpp" />
     <ClCompile Include="audio\DirSoundStream.cpp" />
     <ClCompile Include="CDrums.cpp" />
+    <ClCompile Include="COrgan.cpp" />
     <ClCompile Include="EchoEffect.cpp" />
     <ClCompile Include="Instrument.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="Notes.cpp" />
     <ClCompile Include="Progress.cpp" />
     <ClCompile Include="ProgressDlg.cpp" />
+    <ClCompile Include="ReverbEffect.cpp" />
     <ClCompile Include="SineWave.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -159,6 +161,7 @@
     <ClInclude Include="audio\DirSoundSource.h" />
     <ClInclude Include="audio\DirSoundStream.h" />
     <ClInclude Include="CDrums.h" />
+    <ClInclude Include="COrgan.h" />
     <ClInclude Include="EchoEffect.h" />
     <ClInclude Include="Instrument.h" />
     <ClInclude Include="MainFrm.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Progress.h" />
     <ClInclude Include="ProgressDlg.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ReverbEffect.h" />
     <ClInclude Include="SineWave.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Synthesizer.h" />

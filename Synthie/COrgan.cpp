@@ -12,9 +12,22 @@ COrgan::COrgan(int bpm)
 	m_bpm = bpm;
 }
 
+COrgan::~COrgan()
+{
+}
+
 void COrgan::Start()
 {
 	m_ar.SetSource(&m_sinewave);
 	m_ar.SetSampleRate(GetSampleRate());
 	m_ar.Start();
+}
+
+bool COrgan::Generate()
+{
+	return false;
+}
+
+void COrgan::SetNote(CNote* note)
+{
 }

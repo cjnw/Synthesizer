@@ -125,9 +125,9 @@ bool CSynthesizer::Generate(double * frame)
     double channelframes[NUMEFFECTSCHANNELS][2];
     for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
     {
-        for(int c=0;  c<NumChannels();  c++)
+        for(int c=0;  c<GetNumChannels();  c++)
         {
-            channelframes[i][c] = 0;
+             channelframes[i][c] = 0;
         }
     }
 
@@ -160,14 +160,14 @@ bool CSynthesizer::Generate(double * frame)
 
             for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
             {
-                for(int c=0;  c<NumChannels();  c++)
+                for(int c=0;  c< GetNumChannels();  c++)
                 {
                     channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
                 }
             }
 
 
-			for (int c = 0; c<GetNumChannels(); c++)
+			for (int c = 0; c< GetNumChannels(); c++)
 			{
 				frame[c] += instrument->Frame(c);
 			}

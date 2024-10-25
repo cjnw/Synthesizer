@@ -15,6 +15,8 @@ private:
 	std::wstring m_instrument;
 	int m_measure;
 	double m_beat;
+    double m_dryLevel;
+    double m_wetLevel;
 	CComPtr<IXMLDOMNode> m_node;
 };
 

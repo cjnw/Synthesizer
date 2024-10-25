@@ -2,7 +2,7 @@
 #include "EchoEffect.h"
 
 EchoEffect::EchoEffect()
-    : m_writeIndex(0), m_delaySamples(0), m_wetLevel(0.5), m_dryLevel(0.5)
+    : m_writeIndex(0), m_delaySamples(.5), m_wetLevel(0.5), m_dryLevel(0.5)
 {
 }
 

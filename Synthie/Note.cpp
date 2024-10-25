@@ -51,6 +51,18 @@ void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 			value.ChangeType(VT_R8);
 			m_beat = value.dblVal - 1;
 		}
+        else if (name == "dry")
+        {
+            // Same thing for the beats.
+            value.ChangeType(VT_R8);
+            m_dryLevel = value.dblVal;
+        }
+        else if (name == "wet")
+        {
+            // Same thing for the beats.
+            value.ChangeType(VT_R8);
+            m_wetLevel = value.dblVal;
+        }
 	}
 }
 bool CNote::operator<(const CNote &b)

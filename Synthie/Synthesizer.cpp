@@ -19,28 +19,14 @@ CSynthesizer::CSynthesizer()
 	m_secperbeat = 0.5;     
 
 
-	// Example of adding an Echo effect
-	EchoEffect* echo = new EchoEffect();
-	echo->SetDelay(.5); // Set delay time to 0.5 seconds
-	echo->SetWet(0.5);   // Set wet level
-	echo->SetDry(0.5);   // Set dry level
+	// Adding effects
+	EchoEffect* echo = new EchoEffect(); // default settings
+    ReverbEffect* reverb = new ReverbEffect();
 
 
-
-	// Create the effect
-	ReverbEffect* reverb = new ReverbEffect();
-
-	// Set parameters (adjust values as desired)
-	reverb->SetRoomSize(1.0);  // Room size between 0.0 and 1.0
-	reverb->SetDamping(0.5);   // Damping between 0.0 (no damping) and 1.0 (full damping)
-	reverb->SetWet(.5);       // Wet mix level between 0.0 and 1.0
-	reverb->SetDry(0.5);       // Dry mix level between 0.0 and 1.0
-
-	// Add the effects to the synthesizer
+	// Add the effects to the synthesizer on startup
 	AddEffect(reverb);
     AddEffect(echo);
-
-
 }
 
 
@@ -82,7 +68,6 @@ void CSynthesizer::Start()
 
 bool CSynthesizer::Generate(double * frame)
 {
-
 
 	//
 	// Phase 1: Determine if any notes need to be played.
@@ -136,6 +121,16 @@ bool CSynthesizer::Generate(double * frame)
 		frame[c] = 0;
 	}
 
+
+    double channelframes[NUMEFFECTSCHANNELS][2];
+    for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
+    {
+        for(int c=0;  c<NumChannels();  c++)
+        {
+            channelframes[i][c] = 0;
+        }
+    }
+
 	//
 	// Phase 3: Play an active instruments
 	//
@@ -162,6 +157,16 @@ bool CSynthesizer::Generate(double * frame)
 		{
 			// If we returned true, we have a valid sample.  Add it 
 			// to the frame.
+
+            for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
+            {
+                for(int c=0;  c<NumChannels();  c++)
+                {
+                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
+                }
+            }
+
+
 			for (int c = 0; c<GetNumChannels(); c++)
 			{
 				frame[c] += instrument->Frame(c);
@@ -189,11 +194,6 @@ bool CSynthesizer::Generate(double * frame)
 	{
 		frame[c] = effectFrame[c];
 	}
-
-
-
-
-
 
 	//
 	// Phase 4: Advance the time and beats

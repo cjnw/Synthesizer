@@ -1,7 +1,6 @@
 #pragma once
 #include "AudioNode.h"
 #include "Note.h"
-const int NUMEFFECTSCHANNELS = 4;
 class CInstrument :
 	public CAudioNode
 {
@@ -10,9 +9,12 @@ public:
 	CInstrument(double);
 	virtual ~CInstrument();
 	virtual void SetNote(CNote *note) = 0;
-    double Send(int i) {return sends[i];}
+
+	void SetEffectsManager(std::shared_ptr<EffectsManager> manager) { m_effectsManager = EffectsManager(*manager); }
+    double Send(int i) {return m_effectsManager.Send(i);}
 
 private:
-    double sends[NUMEFFECTSCHANNELS];
+	EffectsManager m_effectsManager;
+
 };
 

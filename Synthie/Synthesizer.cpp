@@ -7,6 +7,12 @@
 #include <algorithm>
 #include "EchoEffect.h"
 #include "ReverbEffect.h"
+#include "EffectsManager.h"
+
+
+const int NUMEFFECTSCHANNELS = 4;
+
+
 CSynthesizer::CSynthesizer()
 : m_time(0)
 {
@@ -30,6 +36,13 @@ CSynthesizer::CSynthesizer()
 }
 
 
+void CSynthesizer::AddEffect(Effect* effect)
+{
+	effect->SetSampleRate(GetSampleRate());
+	m_effects.push_back(effect);
+}
+
+
 CSynthesizer::~CSynthesizer()
 {
 	// Delete effects
@@ -43,13 +56,6 @@ CSynthesizer::~CSynthesizer()
 //! Start the synthesizer
 void CSynthesizer::Start()
 {
-	/*m_time = 0;
-	CToneInstrument *ti = new CToneInstrument();
-	ti->SetSampleRate(GetSampleRate());
-	ti->SetFreq(440);
-	ti->SetDuration(3);
-	ti->Start();
-	m_instruments.push_back(ti);*/
 	m_instruments.clear();
 	m_currentNote = 0;
 	m_measure = 0;
@@ -65,6 +71,37 @@ void CSynthesizer::Start()
 
 }
 
+
+
+void CSynthesizer::ApplyEffects(double* inputFrame, double* outputFrame, double channelframes[][2])
+{
+
+	for (int i = 1; i < NUMEFFECTSCHANNELS + 1;) {
+		if (i == 1) {
+			// TODO: FINISH THIS
+		}
+	}
+
+
+
+	// Initialize tempFrame with the inputFrame
+	double tempFrame[2] = { inputFrame[0], inputFrame[1] };
+
+	// Process each effect in order
+	for (auto effect : m_effects)
+	{
+		double effectOutput[2] = { 0.0, 0.0 };
+		effect->Process(tempFrame, effectOutput);
+
+		// Update tempFrame for the next effect
+		tempFrame[0] = effectOutput[0];
+		tempFrame[1] = effectOutput[1];
+	}
+
+	// The final output is in tempFrame
+	outputFrame[0] = tempFrame[0];
+	outputFrame[1] = tempFrame[1];
+}
 
 bool CSynthesizer::Generate(double * frame)
 {
@@ -105,6 +142,7 @@ bool CSynthesizer::Generate(double * frame)
 		{
 			instrument->SetSampleRate(GetSampleRate());
 			instrument->SetNote(note);
+			instrument->SetEffectsManager(note->GetEffectsManager());
 			instrument->Start();
 
 			m_instruments.push_back(instrument);
@@ -123,6 +161,7 @@ bool CSynthesizer::Generate(double * frame)
 
 
     double channelframes[NUMEFFECTSCHANNELS][2];
+
     for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
     {
         for(int c=0;  c<GetNumChannels();  c++)
@@ -165,12 +204,6 @@ bool CSynthesizer::Generate(double * frame)
                     channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
                 }
             }
-
-
-			for (int c = 0; c< GetNumChannels(); c++)
-			{
-				frame[c] += instrument->Frame(c);
-			}
 		}
 		else
 		{
@@ -184,10 +217,11 @@ bool CSynthesizer::Generate(double * frame)
 		node = next;
 	}
 
-
 	// Phase 3-effect: Apply effects
 	double effectFrame[2] = { 0.0, 0.0 };
-	ApplyEffects(frame, effectFrame);
+
+
+	ApplyEffects(channelframes[0], effectFrame);
 
 	// Copy the effectFrame back to frame
 	for (int c = 0; c < m_channels; c++)
@@ -369,6 +403,7 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode * xml)
 		}
 	}
 
+	std::shared_ptr<EffectsManager> effectManager = std::make_shared<EffectsManager>(NUMEFFECTSCHANNELS);
 
 	CComPtr<IXMLDOMNode> node;
 	xml->get_firstChild(&node);
@@ -381,7 +416,14 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode * xml)
 		if (name == L"note")
 		{
 			XmlLoadNote(node, instrument);
+			m_notes.back().SetEffectsManager(effectManager);
 		}
+
+		if (name == L"effect")
+		{
+			effectManager->addEffectXML(node);
+		}
+
 	}
 
 }
@@ -389,32 +431,4 @@ void CSynthesizer::XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument)
 {
 	m_notes.push_back(CNote());
 	m_notes.back().XmlLoad(xml, instrument);
-}
-
-
-void CSynthesizer::AddEffect(Effect* effect)
-{
-	effect->SetSampleRate(GetSampleRate());
-	m_effects.push_back(effect);
-}
-
-void CSynthesizer::ApplyEffects(double* inputFrame, double* outputFrame)
-{
-	// Initialize tempFrame with the inputFrame
-	double tempFrame[2] = { inputFrame[0], inputFrame[1] };
-
-	// Process each effect in order
-	for (auto effect : m_effects)
-	{
-		double effectOutput[2] = { 0.0, 0.0 };
-		effect->Process(tempFrame, effectOutput);
-
-		// Update tempFrame for the next effect
-		tempFrame[0] = effectOutput[0];
-		tempFrame[1] = effectOutput[1];
-	}
-
-	// The final output is in tempFrame
-	outputFrame[0] = tempFrame[0];
-	outputFrame[1] = tempFrame[1];
 }

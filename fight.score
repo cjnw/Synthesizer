@@ -13,9 +13,8 @@
        <note measure="6" beat="1" duration="1" wet=".5" dry=".5" note="A4"/>
        <note measure="6" beat="2" duration="1" wet=".5" dry=".5" note="F4"/>
        <note measure="7" beat="1" duration="3" wet=".5" dry=".5" note="Bb4"/>
-
-       <Echo send=".5">
-       <Reverb send=".7">
+	 <effect which="echo" send="0.7" main="0.3"/>
+	 <effect which="reverb" send="0.7" main="0.3"/>
      </instrument>
 </score>
 

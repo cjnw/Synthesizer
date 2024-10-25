@@ -134,6 +134,7 @@
     <ClCompile Include="CDrums.cpp" />
     <ClCompile Include="COrgan.cpp" />
     <ClCompile Include="EchoEffect.cpp" />
+    <ClCompile Include="EffectsManager.cpp" />
     <ClCompile Include="Instrument.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Note.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="CDrums.h" />
     <ClInclude Include="COrgan.h" />
     <ClInclude Include="EchoEffect.h" />
+    <ClInclude Include="EffectsManager.h" />
     <ClInclude Include="Instrument.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Note.h" />

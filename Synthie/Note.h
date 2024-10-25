@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <memory>
+#include "EffectsManager.h"
 class CNote
 {
 public:
@@ -10,6 +12,10 @@ public:
 	const std::wstring &Instrument() const { return m_instrument; }
 	IXMLDOMNode *Node() { return m_node; }
 	void XmlLoad(IXMLDOMNode * xml, std::wstring & instrument);
+	void SetEffectsManager(std::shared_ptr<EffectsManager> manager) { m_effectsManager = manager; }
+	std::shared_ptr<EffectsManager> GetEffectsManager() {
+		return m_effectsManager;
+	}
 	bool operator<(const CNote &b);
 private:
 	std::wstring m_instrument;
@@ -18,5 +24,8 @@ private:
     double m_dryLevel;
     double m_wetLevel;
 	CComPtr<IXMLDOMNode> m_node;
+	std::shared_ptr<EffectsManager> m_effectsManager;
+
+
 };
 

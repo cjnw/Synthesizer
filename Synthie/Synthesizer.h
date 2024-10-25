@@ -38,7 +38,7 @@ public:
 	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
 
 	void AddEffect(Effect* effect);
-	void ApplyEffects(double* in, double* out);
+	void ApplyEffects(double* inputFrame, double* outputFrame, double channelframes[][2]);
 private:
 	int		m_channels;
 	double	m_sampleRate;

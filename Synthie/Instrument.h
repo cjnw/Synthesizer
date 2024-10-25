@@ -1,7 +1,7 @@
 #pragma once
 #include "AudioNode.h"
 #include "Note.h"
-int NUMEFFECTSCHANNELS = 4;
+const int NUMEFFECTSCHANNELS = 4;
 class CInstrument :
 	public CAudioNode
 {

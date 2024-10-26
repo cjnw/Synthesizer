@@ -16,6 +16,8 @@ public:
 	std::shared_ptr<EffectsManager> GetEffectsManager() {
 		return m_effectsManager;
 	}
+
+	double getWet() { return m_wetLevel; }
 	bool operator<(const CNote &b);
 private:
 	std::wstring m_instrument;

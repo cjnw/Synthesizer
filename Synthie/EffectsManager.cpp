@@ -11,11 +11,17 @@ EffectsManager::EffectsManager(int channels){
 
 
 int GetEffectIndexFromName(std::wstring name) {
-	if (name == L"echo") {
+	if (name == L"noise-gate") {
 		return 1;
 	}
-	else if (name == L"reverb") {
+	else if (name == L"compressor") {
 		return 2;
+	}
+	else if (name == L"chorus") {
+		return 3;
+	}
+	else if (name == L"flanger") {
+		return 4;
 	}
 
 	return -1;

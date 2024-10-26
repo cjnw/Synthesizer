@@ -6,7 +6,6 @@ using namespace std;
 #include "Instrument.h"
 #include "Note.h"
 #include "Effect.h"
-
 class CSynthesizer
 {
 public:
@@ -36,9 +35,7 @@ public:
 	void XmlLoadScore(IXMLDOMNode * xml);
 	void XmlLoadInstrument(IXMLDOMNode * xml);
 	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
-
-	void AddEffect(Effect* effect);
-	void ApplyEffects(double* inputFrame, double* outputFrame, double channelframes[][2]);
+	void ApplyEffects(double channelframes[][2], double* outputFrame);
 private:
 	int		m_channels;
 	double	m_sampleRate;
@@ -52,6 +49,16 @@ private:
 	std::list<CInstrument *>  m_instruments;
 	std::vector<CNote> m_notes;
 	std::vector<Effect*> m_effects; 
+
+	Effect* m_echo = nullptr;
+	Effect* m_reverb = nullptr;
+
+	Effect* m_noiseGate;
+	Effect* m_compressor;
+	Effect* m_chorus;
+	Effect* m_flanger;
+
+
 public:
 	void Start();
 	bool Generate(double*);

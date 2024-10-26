@@ -8,9 +8,13 @@
 #include "EchoEffect.h"
 #include "ReverbEffect.h"
 #include "EffectsManager.h"
+#include "NoiseGateEffect.h"
+#include "CompressorEffect.h"
+#include "ChorusEffect.h"
+#include "FlangerEffect.h"
 
 
-const int NUMEFFECTSCHANNELS = 4;
+const int NUMEFFECTSCHANNELS = 5;
 
 
 CSynthesizer::CSynthesizer()
@@ -24,33 +28,21 @@ CSynthesizer::CSynthesizer()
 	m_beatspermeasure = 4;
 	m_secperbeat = 0.5;     
 
-
-	// Adding effects
-	EchoEffect* echo = new EchoEffect(); // default settings
-    ReverbEffect* reverb = new ReverbEffect();
-
-
-	// Add the effects to the synthesizer on startup
-	AddEffect(reverb);
-    AddEffect(echo);
+	m_noiseGate = new NoiseGateEffect();
+	m_compressor = new CompressorEffect();
+	m_chorus = new ChorusEffect();
+	m_flanger = new FlangerEffect();
 }
 
 
-void CSynthesizer::AddEffect(Effect* effect)
-{
-	effect->SetSampleRate(GetSampleRate());
-	m_effects.push_back(effect);
-}
+
 
 
 CSynthesizer::~CSynthesizer()
 {
 	// Delete effects
-	for (auto effect : m_effects)
-	{
-		delete effect;
-	}
-	m_effects.clear();
+	//delete m_echo;
+	//delete m_reverb;
 }
 
 //! Start the synthesizer
@@ -62,43 +54,52 @@ void CSynthesizer::Start()
 	m_beat = 0;
 	m_time = 0;
 
-	// Start all effects
-	for (auto effect : m_effects)
-	{
-		effect->SetSampleRate(GetSampleRate());
-		effect->Start();
-	}
 
+	m_flanger->SetSampleRate(GetSampleRate());
+	m_flanger->Start();
+
+	m_chorus->SetSampleRate(GetSampleRate());
+	m_chorus->Start();
+
+
+	m_compressor->SetSampleRate(GetSampleRate());
+	m_compressor->Start();
+
+	m_noiseGate->SetSampleRate(GetSampleRate());
+	m_noiseGate->Start();
 }
 
 
 
-void CSynthesizer::ApplyEffects(double* inputFrame, double* outputFrame, double channelframes[][2])
+void CSynthesizer::ApplyEffects(double channelframes[][2], double* outputFrame)
 {
-
-	for (int i = 1; i < NUMEFFECTSCHANNELS + 1;) {
-		if (i == 1) {
-			// TODO: FINISH THIS
-		}
-	}
+	double tempFrame[2] = { 0,0};
 
 
-
-	// Initialize tempFrame with the inputFrame
-	double tempFrame[2] = { inputFrame[0], inputFrame[1] };
-
-	// Process each effect in order
-	for (auto effect : m_effects)
-	{
+	for (int i = 0; i < NUMEFFECTSCHANNELS; i++) {
 		double effectOutput[2] = { 0.0, 0.0 };
-		effect->Process(tempFrame, effectOutput);
+		if (i == 0) {
+			effectOutput[0] = channelframes[0][0];
+			effectOutput[1] = channelframes[0][1];
+		}
+		else if (i == 1) {
+			m_noiseGate->Process(channelframes[i], effectOutput);
+		}
+		else if (i == 2) {
+			m_compressor->Process(channelframes[i], effectOutput);
+		}
+		else if (i == 3) {
+			m_chorus->Process(channelframes[i], effectOutput);
+		}
+		else if (i == 4) {
+			m_flanger->Process(channelframes[i], effectOutput);
+		}
 
-		// Update tempFrame for the next effect
-		tempFrame[0] = effectOutput[0];
-		tempFrame[1] = effectOutput[1];
+		tempFrame[0] += effectOutput[0];
+		tempFrame[1] += effectOutput[1];
+
 	}
 
-	// The final output is in tempFrame
 	outputFrame[0] = tempFrame[0];
 	outputFrame[1] = tempFrame[1];
 }
@@ -142,8 +143,10 @@ bool CSynthesizer::Generate(double * frame)
 		{
 			instrument->SetSampleRate(GetSampleRate());
 			instrument->SetNote(note);
+			instrument->setWet(note->getWet());
 			instrument->SetEffectsManager(note->GetEffectsManager());
 			instrument->Start();
+			
 
 			m_instruments.push_back(instrument);
 		}
@@ -201,9 +204,16 @@ bool CSynthesizer::Generate(double * frame)
             {
                 for(int c=0;  c< GetNumChannels();  c++)
                 {
-                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
+					double factor = instrument->getWet();
+					if (i == 0) {
+						factor = 1 - instrument->getWet();
+					}
+                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i) * factor;
                 }
             }
+
+
+
 		}
 		else
 		{
@@ -221,7 +231,7 @@ bool CSynthesizer::Generate(double * frame)
 	double effectFrame[2] = { 0.0, 0.0 };
 
 
-	ApplyEffects(channelframes[0], effectFrame);
+	ApplyEffects(channelframes, effectFrame);
 
 	// Copy the effectFrame back to frame
 	for (int c = 0; c < m_channels; c++)

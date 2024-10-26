@@ -12,9 +12,12 @@ public:
 
 	void SetEffectsManager(std::shared_ptr<EffectsManager> manager) { m_effectsManager = EffectsManager(*manager); }
     double Send(int i) {return m_effectsManager.Send(i);}
+	void setWet(double wet) { m_wet = wet; }
+	double getWet() { return m_wet; }
 
 private:
 	EffectsManager m_effectsManager;
+	double m_wet;
 
 };
 

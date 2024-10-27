@@ -135,6 +135,7 @@
     <ClCompile Include="ChorusEffect.cpp" />
     <ClCompile Include="CompressorEffect.cpp" />
     <ClCompile Include="COrgan.cpp" />
+    <ClCompile Include="CPianoInstrument.cpp" />
     <ClCompile Include="EchoEffect.cpp" />
     <ClCompile Include="EffectsManager.cpp" />
     <ClCompile Include="FlangerEffect.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="ChorusEffect.h" />
     <ClInclude Include="CompressorEffect.h" />
     <ClInclude Include="COrgan.h" />
+    <ClInclude Include="CPianoInstrument.h" />
     <ClInclude Include="EchoEffect.h" />
     <ClInclude Include="EffectsManager.h" />
     <ClInclude Include="FlangerEffect.h" />

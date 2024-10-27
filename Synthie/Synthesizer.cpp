@@ -12,6 +12,7 @@
 #include "CompressorEffect.h"
 #include "ChorusEffect.h"
 #include "FlangerEffect.h"
+#include "CPianoInstrument.h"
 
 
 const int NUMEFFECTSCHANNELS = 5;
@@ -136,6 +137,11 @@ bool CSynthesizer::Generate(double * frame)
 		if (note->Instrument() == L"ToneInstrument")
 		{
 			instrument = new CToneInstrument(GetBeatsPerMinute());
+		}
+
+		else if (note->Instrument() == L"PianoInstrument")
+		{
+			instrument = new CPianoInstrument();
 		}
 
 		// Configure the instrument object

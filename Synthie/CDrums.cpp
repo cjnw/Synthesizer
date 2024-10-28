@@ -129,7 +129,7 @@ void CDrums::SetDrumType(const std::wstring& type)
 
         // Envelope settings for medium tom
         m_ar.SetAttack(0.002);               // Quick attack for tom punch
-        m_ar.SetRelease(0.28);               // Slightly longer release to match duration
+        m_ar.SetRelease(0.27);               // Slightly longer release to match duration
     }
 
     else if (type == L"cymbal")

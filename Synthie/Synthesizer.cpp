@@ -5,8 +5,6 @@
 #include "xmlhelp.h"
 #include <vector>
 #include <algorithm>
-#include "EchoEffect.h"
-#include "ReverbEffect.h"
 #include "EffectsManager.h"
 #include "NoiseGateEffect.h"
 #include "CompressorEffect.h"
@@ -221,11 +219,7 @@ bool CSynthesizer::Generate(double * frame)
             {
                 for(int c=0;  c< GetNumChannels();  c++)
                 {
-					double factor = instrument->getWet();
-					if (i == 0) {
-						factor = 1 - instrument->getWet();
-					}
-                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i) * factor;
+                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
                 }
             }
 
@@ -430,7 +424,7 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode * xml)
 		}
 	}
 
-	std::shared_ptr<EffectsManager> effectManager = std::make_shared<EffectsManager>(NUMEFFECTSCHANNELS);
+//	std::shared_ptr<EffectsManager> effectManager = std::make_shared<EffectsManager>(NUMEFFECTSCHANNELS);
 
 	CComPtr<IXMLDOMNode> node;
 	xml->get_firstChild(&node);
@@ -443,14 +437,7 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode * xml)
 		if (name == L"note")
 		{
 			XmlLoadNote(node, instrument);
-			m_notes.back().SetEffectsManager(effectManager);
 		}
-
-		if (name == L"effect")
-		{
-			effectManager->addEffectXML(node);
-		}
-
 	}
 
 }

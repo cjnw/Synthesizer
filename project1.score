@@ -1,42 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <score bpm="120" beatspermeasure="4">
+    <!-- ToneInstrument Section -->
     <instrument instrument="ToneInstrument">
-        <!-- Section 1: Introduction -->
-        <note measure="1" beat="1" duration="0.5" wet="0.8" dry="0.2" note="Bb4"/>
-        <note measure="1" beat="1.5" duration="0.5" wet="0.8" dry="0.2" note="C5"/>
+        <!-- Melodic Sequence with Effects -->
+        <note measure="1" beat="1" duration="0.5" note="Bb4">
+           <effect which="compressor" wet="0.8" dry="0.2" />
+           <effect which="noise-gate" wet="0.7" dry="0.3"/>
+           <effect which="chorus" wet="0.7" dry="0.3"/>
+           <effect which="flanger"  wet="0.6" dry="0.4"/>
+	  </note>
+        <note measure="1" beat="1.5" duration="0.5" note="C5"/>
         <note measure="1" beat="2" duration="0.5" wet="0.8" dry="0.2" note="D5"/>
         <note measure="1" beat="2.5" duration="0.5" wet="0.8" dry="0.2" note="Eb5"/>
-        
         <note measure="2" beat="1" duration="1.0" wet="0.9" dry="0.1" note="F5"/>
         <note measure="2" beat="2" duration="1.0" wet="0.9" dry="0.1" note="G5"/>
-        
         <note measure="3" beat="1" duration="0.75" wet="0.85" dry="0.15" note="A5"/>
         <note measure="3" beat="1.75" duration="0.75" wet="0.85" dry="0.15" note="Bb5"/>
         <note measure="3" beat="2.5" duration="0.5" wet="0.85" dry="0.15" note="C6"/>
         
-        <note measure="4" beat="1" duration="1.5" wet="0.9" dry="0.1" note="D6"/>
-        <note measure="4" beat="2.5" duration="0.5" wet="0.9" dry="0.1" note="Eb6"/>
+        <!-- Extended Melodic Build-up -->
+        <note measure="4" beat="1" duration="0.5" wet="0.9" dry="0.1" note="D6"/>
+        <note measure="4" beat="1.5" duration="0.5" wet="0.9" dry="0.1" note="E6"/>
+        <note measure="4" beat="2" duration="1.0" wet="1.0" dry="0.0" note="F6"/>
+        <note measure="5" beat="1" duration="0.5" wet="1.0" dry="0.0" note="G6"/>
+        <note measure="5" beat="1.5" duration="0.5" wet="1.0" dry="0.0" note="A6"/>
+        <note measure="5" beat="2" duration="1.0" wet="1.0" dry="0.0" note="Bb6"/>
         
-        <note measure="5" beat="1" duration="0.5" wet="1.0" dry="0.0" note="F6"/>
-        <note measure="5" beat="1.5" duration="0.5" wet="1.0" dry="0.0" note="G6"/>
-        <note measure="5" beat="2" duration="0.5" wet="1.0" dry="0.0" note="A6"/>
-        <note measure="5" beat="2.5" duration="0.5" wet="1.0" dry="0.0" note="Bb6"/>
+        <!-- Rhythmic Melody with Quick Successions -->
+        <note measure="6" beat="1" duration="0.25" wet="0.85" dry="0.15" note="C7"/>
+        <note measure="6" beat="1.25" duration="0.25" wet="0.85" dry="0.15" note="D7"/>
+        <note measure="6" beat="1.5" duration="0.5" wet="0.85" dry="0.15" note="Eb7"/>
+        <note measure="6" beat="2" duration="0.25" wet="0.85" dry="0.15" note="F7"/>
+        <note measure="6" beat="2.25" duration="0.25" wet="0.85" dry="0.15" note="G7"/>
+        <note measure="7" beat="1" duration="1.5" wet="0.9" dry="0.1" note="Bb5"/>
         
-        <note measure="6" beat="1" duration="1.0" wet="1.0" dry="0.0" note="C7"/>
-        <note measure="6" beat="2" duration="1.0" wet="1.0" dry="0.0" note="D7"/>
-        
-        <note measure="7" beat="1" duration="0.75" wet="0.85" dry="0.15" note="Eb6"/>
-        <note measure="7" beat="1.75" duration="0.75" wet="0.85" dry="0.15" note="D6"/>
-        <note measure="7" beat="2.5" duration="0.5" wet="0.85" dry="0.15" note="C6"/>
-        
-        <note measure="8" beat="1" duration="1.5" wet="0.9" dry="0.1" note="Bb5"/>
-        <note measure="8" beat="2.5" duration="0.5" wet="0.9" dry="0.1" note="A5"/>
-        
+        <!-- Ending Sequence with Sustain and Vibrato -->
+        <note measure="8" beat="1" duration="2.0" wet="0.95" dry="0.05" note="A5"/>
+        <note measure="8" beat="3" duration="2.0" wet="0.95" dry="0.05" note="Bb5"/>
         <note measure="9" beat="1" duration="4.0" wet="0.95" dry="0.05" note="Bb4"/>
+
+    </instrument>
+
+    <!-- Drums Section with Extended Rhythmic Patterns -->
+    <instrument instrument="Drums">
+        <!-- Basic Rhythm Introduction -->
+        <note measure="1" beat="1" duration="0.5" type="bass"/>
+        <note measure="1" beat="2" duration="0.5" type="snare"/>
+        <note measure="1" beat="3" duration="0.5" type="bass"/>
+        <note measure="1" beat="4" duration="0.5" type="snare"/>
         
-        <effect which="noise-gate" send="0.7" main="0.3" threshold="0.05" attackTime="0.005" releaseTime="0.2"/>
-        <effect which="compressor" send="0.8" main="0.2" threshold="0.4" ratio="6.0" attackTime="0.002" releaseTime="0.3"/>
-        <effect which="chorus" send="0.7" main="0.3" depth="0.005" rate="0.5" wet="0.7" dry="0.3"/>
-        <effect which="flanger" send="0.6" main="0.4" depth="0.004" rate="0.6" feedback="0.8" wet="0.6" dry="0.4"/>
+        <!-- Build-up with Toms and Fills -->
+        <note measure="2" beat="1" duration="0.5" type="bass"/>
+        <note measure="2" beat="2" duration="0.5" type="tom"/>
+        <note measure="2" beat="3" duration="0.5" type="bass"/>
+        <note measure="2" beat="4" duration="0.5" type="tom"/>
+        
+        <!-- Complex Patterns with Cymbals and Quick Fills -->
+        <note measure="3" beat="1" duration="0.25" type="cymbal"/>
+        <note measure="3" beat="1.25" duration="0.25" type="tom"/>
+        <note measure="3" beat="2" duration="0.5" type="snare"/>
+        <note measure="3" beat="3" duration="0.5" type="bass"/>
+        <note measure="3" beat="3.5" duration="0.25" type="cymbal"/>
+        <note measure="3" beat="4" duration="0.5" type="snare"/>
+
+        <!-- Rhythmic Variation with Quick Successions -->
+        <note measure="4" beat="1" duration="0.5" type="bass"/>
+        <note measure="4" beat="1.5" duration="0.25" type="tom"/>
+        <note measure="4" beat="2" duration="0.25" type="snare"/>
+        <note measure="4" beat="2.5" duration="0.5" type="bass"/>
+        <note measure="4" beat="3" duration="0.5" type="snare"/>
+        <note measure="4" beat="4" duration="0.5" type="tom"/>
+
+        <!-- Adding Complexity and Syncopation -->
+        <note measure="5" beat="1" duration="0.25" type="cymbal"/>
+        <note measure="5" beat="1.25" duration="0.25" type="snare"/>
+        <note measure="5" beat="1.5" duration="0.5" type="tom"/>
+        <note measure="5" beat="2.5" duration="0.5" type="bass"/>
+        <note measure="5" beat="3" duration="0.25" type="cymbal"/>
+        <note measure="5" beat="3.25" duration="0.5" type="snare"/>
+        <note measure="5" beat="4" duration="0.5" type="bass"/>
+
+        <!-- Complex Fill to End the Section -->
+        <note measure="6" beat="1" duration="0.5" type="bass"/>
+        <note measure="6" beat="2" duration="0.25" type="cymbal"/>
+        <note measure="6" beat="2.25" duration="0.25" type="snare"/>
+        <note measure="6" beat="2.5" duration="0.5" type="tom"/>
+        <note measure="6" beat="3.5" duration="0.25" type="cymbal"/>
+        <note measure="6" beat="4" duration="0.5" type="snare"/>
     </instrument>
 </score>

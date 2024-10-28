@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Note.h"
+#include "xmlhelp.h"
 
 
 CNote::CNote()
@@ -12,6 +13,8 @@ CNote::~CNote()
 }
 void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 {
+	std::shared_ptr<EffectsManager> effectManager = std::make_shared<EffectsManager>(5);
+	this->SetEffectsManager(effectManager);
 	// Remember the xml node and the instrument.
 	m_node = xml;
 	m_instrument = instrument;
@@ -51,19 +54,25 @@ void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 			value.ChangeType(VT_R8);
 			m_beat = value.dblVal - 1;
 		}
-        else if (name == "dry")
-        {
-            // Same thing for the beats.
-            value.ChangeType(VT_R8);
-            m_dryLevel = value.dblVal;
-        }
-        else if (name == "wet")
-        {
-            // Same thing for the beats.
-            value.ChangeType(VT_R8);
-            m_wetLevel = value.dblVal;
-        }
 	}
+
+
+
+	CComPtr<IXMLDOMNode> node;
+	xml->get_firstChild(&node);
+	for (; node != NULL; NextNode(node))
+	{
+		// Get the name of the node
+		CComBSTR name;
+		node->get_nodeName(&name);
+
+		if (name == L"effect")
+		{
+			effectManager->addEffectXML(node);
+		}
+
+	}
+
 }
 bool CNote::operator<(const CNote &b)
 {

@@ -54,7 +54,7 @@ void EffectsManager::addEffectXML(IXMLDOMNode* xml) {
 		attrib->get_nodeValue(&value);
 
 		if (name == L"which") effectName = value.bstrVal;
-		if (name == L"send") {
+		if (name == L"wet") {
 			value.ChangeType(VT_R8);
 			sendValue = value.dblVal;
 		}

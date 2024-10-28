@@ -135,12 +135,12 @@
     <ClCompile Include="CNoise.cpp" />
     <ClCompile Include="CReson.cpp" />
     <ClCompile Include="Dynamics.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Envelope.cpp" />
     <ClCompile Include="ChorusEffect.cpp" />
     <ClCompile Include="CompressorEffect.cpp" />
     <ClCompile Include="COrgan.cpp" />
     <ClCompile Include="CPianoInstrument.cpp" />
-    <ClCompile Include="EchoEffect.cpp" />
     <ClCompile Include="EffectsManager.cpp" />
     <ClCompile Include="FlangerEffect.cpp" />
     <ClCompile Include="Instrument.cpp" />
@@ -152,7 +152,6 @@
     <ClCompile Include="Polyphony.cpp" />
     <ClCompile Include="Progress.cpp" />
     <ClCompile Include="ProgressDlg.cpp" />
-    <ClCompile Include="ReverbEffect.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="SineWave.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -177,12 +176,12 @@
     <ClInclude Include="CNoise.h" />
     <ClInclude Include="CReson.h" />
     <ClInclude Include="Dynamics.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Envelope.h" />
     <ClInclude Include="ChorusEffect.h" />
     <ClInclude Include="CompressorEffect.h" />
     <ClInclude Include="COrgan.h" />
     <ClInclude Include="CPianoInstrument.h" />
-    <ClInclude Include="EchoEffect.h" />
     <ClInclude Include="EffectsManager.h" />
     <ClInclude Include="FlangerEffect.h" />
     <ClInclude Include="Instrument.h" />
@@ -195,7 +194,6 @@
     <ClInclude Include="Progress.h" />
     <ClInclude Include="ProgressDlg.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ReverbEffect.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="SineWave.h" />
     <ClInclude Include="stdafx.h" />

@@ -120,6 +120,12 @@
     <ClCompile Include="Dynamics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CNoise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CReson.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio\DirSound.h">
@@ -234,6 +240,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dynamics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CReson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

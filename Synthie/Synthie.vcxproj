@@ -132,6 +132,8 @@
     <ClCompile Include="audio\DirSoundSource.cpp" />
     <ClCompile Include="audio\DirSoundStream.cpp" />
     <ClCompile Include="CDrums.cpp" />
+    <ClCompile Include="CNoise.cpp" />
+    <ClCompile Include="CReson.cpp" />
     <ClCompile Include="Dynamics.cpp" />
     <ClCompile Include="Envelope.cpp" />
     <ClCompile Include="ChorusEffect.cpp" />
@@ -172,6 +174,8 @@
     <ClInclude Include="audio\DirSoundSource.h" />
     <ClInclude Include="audio\DirSoundStream.h" />
     <ClInclude Include="CDrums.h" />
+    <ClInclude Include="CNoise.h" />
+    <ClInclude Include="CReson.h" />
     <ClInclude Include="Dynamics.h" />
     <ClInclude Include="Envelope.h" />
     <ClInclude Include="ChorusEffect.h" />

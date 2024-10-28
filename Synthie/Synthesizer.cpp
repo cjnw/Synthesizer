@@ -13,6 +13,7 @@
 #include "ChorusEffect.h"
 #include "FlangerEffect.h"
 #include "CPianoInstrument.h"
+#include "CDrums.h"
 
 
 const int NUMEFFECTSCHANNELS = 5;
@@ -142,6 +143,11 @@ bool CSynthesizer::Generate(double * frame)
 		else if (note->Instrument() == L"PianoInstrument")
 		{
 			instrument = new CPianoInstrument(16);
+		}
+
+		else if (note->Instrument() == L"Drums")
+		{
+			instrument = new CDrums();
 		}
 
 		// Configure the instrument object

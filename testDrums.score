@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="4">
+    <instrument instrument="Drums">
+        <!-- Measure 1 -->
+        <note measure="1" beat="1" duration="0.5" type="bass"/>
+        <note measure="1" beat="2" duration="0.5" type="snare"/>
+        <note measure="1" beat="3" duration="0.5" type="bass"/>
+        <note measure="1" beat="4" duration="0.5" type="snare"/>
+        
+        <!-- Measure 2 -->
+        <note measure="2" beat="1" duration="0.5" type="bass"/>
+        <note measure="2" beat="2" duration="0.5" type="tom"/>
+        <note measure="2" beat="3" duration="0.5" type="bass"/>
+        <note measure="2" beat="4" duration="0.5" type="tom"/>
+
+        <!-- Measure 3 -->
+        <note measure="3" beat="1" duration="0.5" type="bass"/>
+        <note measure="3" beat="2" duration="0.5" type="snare"/>
+        <note measure="3" beat="2.5" duration="0.25" type="cymbal"/>
+        <note measure="3" beat="3" duration="0.5" type="bass"/>
+        <note measure="3" beat="4" duration="0.5" type="snare"/>
+
+        <!-- Measure 4 - Complex rhythm -->
+        <note measure="4" beat="1" duration="0.25" type="cymbal"/>
+        <note measure="4" beat="1.5" duration="0.25" type="tom"/>
+        <note measure="4" beat="2" duration="0.5" type="snare"/>
+        <note measure="4" beat="3" duration="0.5" type="bass"/>
+        <note measure="4" beat="3.5" duration="0.25" type="cymbal"/>
+        <note measure="4" beat="4" duration="0.5" type="snare"/>
+    </instrument>
+</score>

@@ -24,6 +24,7 @@ void CPianoInstrument::StartNote(int midiNote, double velocity) {
 }
 
 void CPianoInstrument::StopNote(int midiNote) {
+    m_polyphony.StopVoice(midiNote);
 }
 
 void CPianoInstrument::SetPedal(bool pressed) {
@@ -53,6 +54,14 @@ void CPianoInstrument::Generate(double* frame, int channels) {
     for (int i = 0; i < channels; ++i) {
         frame[i] *= envelopeValue;
     }
+
+    if (m_pedal.IsPressed()) {
+        double noiseFrame[2] = { 0.0, 0.0 };
+        m_pedal.GenerateNoiseFrame(noiseFrame, true, channels);
+        for (int i = 0; i < channels; ++i) {
+            frame[i] += noiseFrame[i];
+        }
+    }
 }
 
 void CPianoInstrument::SetDynamicRange(double minLevel, double maxLevel) {
@@ -65,11 +74,21 @@ void CPianoInstrument::SetEnvelope(double attack, double release) {
 
 void CPianoInstrument::SetNote(CNote* note) {
     m_currentNote = note;
+    if (m_currentNote) {
+        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
+    }
 }
 
 void CPianoInstrument::Start() {
+    if (m_currentNote) {
+        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
+    }
 }
 
 bool CPianoInstrument::Generate() {
-    return true;
+    double frame[2] = { 0.0, 0.0 };
+    Generate(frame, 2);
+
+    m_time += 1.0 / 44100.0; 
+    return m_envelope.IsActive(m_time);
 }

@@ -23,3 +23,11 @@ void Pedal::AddNoiseSample(const Sample& down, const Sample& up) {
 Sample& Pedal::GetNoise(bool isPressing)  {
     return isPressing ? m_noiseDown : m_noiseUp;
 }
+
+void Pedal::GenerateNoiseFrame(double* frame, bool isPressing, int channels) {
+    Sample& noiseSample = GetNoise(isPressing);
+    double sampleValue = noiseSample.Generate();
+    for (int i = 0; i < channels; ++i) {
+        frame[i] += sampleValue;
+    }
+}

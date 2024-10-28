@@ -32,4 +32,5 @@ private:
     Dynamics m_dynamics;
     Envelope m_envelope;
     CNote* m_currentNote;
+    double m_time = 0.0;
 };

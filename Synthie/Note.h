@@ -18,6 +18,13 @@ public:
 	}
 
 	double getWet() { return m_wetLevel; }
+
+	int GetPitch() const { return m_pitch; }
+	void SetPitch(int pitch) { m_pitch = pitch; }
+
+	double GetVelocity() const { return m_velocity; }
+	void SetVelocity(double velocity) { m_velocity = velocity; }
+
 	bool operator<(const CNote &b);
 private:
 	std::wstring m_instrument;
@@ -25,6 +32,8 @@ private:
 	double m_beat;
     double m_dryLevel;
     double m_wetLevel;
+	int m_pitch;                
+	double m_velocity;
 	CComPtr<IXMLDOMNode> m_node;
 	std::shared_ptr<EffectsManager> m_effectsManager;
 

@@ -141,7 +141,7 @@ bool CSynthesizer::Generate(double * frame)
 
 		else if (note->Instrument() == L"PianoInstrument")
 		{
-			instrument = new CPianoInstrument();
+			instrument = new CPianoInstrument(16);
 		}
 
 		// Configure the instrument object

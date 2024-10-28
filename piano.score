@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="4">
+    <instrument instrument="ToneInstrument">
+        <sample note="C4" filename="C4_sample.wav"/>
+        <sample note="D4" filename="D4_sample.wav"/>
+        <sample note="E4" filename="E4_sample.wav"/>
+        <sample note="F4" filename="F4_sample.wav"/>
+        <sample note="G4" filename="G4_sample.wav"/>
+        <sample note="A4" filename="A4_sample.wav"/>
+        <sample note="B4" filename="B4_sample.wav"/>
+        <sample note="C5" filename="C5_sample.wav"/>
+
+        <dynamics minLevel="0.0" maxLevel="1.0"/>
+        <envelope attack="0.05" release="0.1"/>
+
+        <note measure="1" beat="1" duration="0.5" note="C4" wet="0.5"/>
+        <note measure="1" beat="1.5" duration="0.5" note="E4" wet="0.5"/>
+        <note measure="1" beat="2" duration="0.5" note="G4" wet="0.5"/>
+        <note measure="1" beat="2.5" duration="0.5" note="B4" wet="0.5"/>
+
+        <note measure="2" beat="1" duration="0.5" note="D4" wet="0.5"/>
+        <note measure="2" beat="1.5" duration="0.5" note="F#4" wet="0.5"/>
+        <note measure="2" beat="2" duration="0.5" note="A4" wet="0.5"/>
+        <note measure="2" beat="2.5" duration="0.5" note="C5" wet="0.5"/>
+
+        <note measure="3" beat="1" duration="0.5" note="E4" wet="0.5"/>
+        <note measure="3" beat="1.5" duration="0.5" note="G4" wet="0.5"/>
+        <note measure="3" beat="2" duration="0.5" note="B4" wet="0.5"/>
+        <note measure="3" beat="2.5" duration="0.5" note="D5" wet="0.5"/>
+
+        <Effect name="echo">
+            <note measure="4" beat="1" duration="0.5" wet="0.5" dry="0.5" note="C4"/>
+        </Effect>
+
+        <note measure="4" beat="1" duration="0.5" note="F4" wet="0.5"/>
+        <note measure="4" beat="1.5" duration="0.5" note="A4" wet="0.5"/>
+        <note measure="4" beat="2" duration="0.5" note="C5" wet="0.5"/>
+        <note measure="4" beat="2.5" duration="0.5" note="E5" wet="0.5"/>
+
+        <note measure="5" beat="1" duration="0.5" note="G4" wet="0.5"/>
+        <note measure="5" beat="1.5" duration="0.5" note="B4" wet="0.5"/>
+        <note measure="5" beat="2" duration="0.5" note="D5" wet="0.5"/>
+        <note measure="5" beat="2.5" duration="0.5" note="F5" wet="0.5"/>
+
+        <note measure="6" beat="1" duration="1" note="A4" wet="0.5"/>
+        <note measure="6" beat="2" duration="1" note="C5" wet="0.5"/>
+
+        <note measure="7" beat="1" duration="3" note="E4" wet="0.5"/>
+        <note measure="7" beat="1" duration="3" note="G4" wet="0.5"/>
+        <note measure="7" beat="1" duration="3" note="B4" wet="0.5"/>
+    </instrument>
+</score>

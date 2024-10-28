@@ -13,6 +13,7 @@
 #include "ChorusEffect.h"
 #include "FlangerEffect.h"
 #include "CPianoInstrument.h"
+#include "COrgan.h"
 
 
 const int NUMEFFECTSCHANNELS = 5;
@@ -144,6 +145,10 @@ bool CSynthesizer::Generate(double * frame)
 			instrument = new CPianoInstrument();
 		}
 
+		else if (note->Instrument() == L"Organ")
+		{
+			instrument = new COrgan();
+		}
 		// Configure the instrument object
 		if (instrument != NULL)
 		{

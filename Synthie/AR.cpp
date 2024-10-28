@@ -48,3 +48,9 @@ bool CAR::Generate()
 	// We return true until the time reaches the duration.
 	return m_time < m_duration;
 }
+
+
+void CAR::SetAttack(double attack)
+{
+	m_attack = attack;
+}

@@ -1,37 +1,36 @@
 #pragma once
-#include "Instrument.h"
+
+#include <vector>
 #include <map>
-#include <string>
+#include "Sample.h"
+#include "Dynamics.h"
+#include "Envelope.h"
+#include "Pedal.h"
+#include "Polyphony.h"
+#include "Instrument.h"
 
-
-class CPianoInstrument :
-    public CInstrument
-{
+class CPianoInstrument : public CInstrument {
 public:
-    CPianoInstrument();
-    virtual ~CPianoInstrument();
+    CPianoInstrument(int maxVoices);
+    ~CPianoInstrument();
 
-    
-    virtual void Start() override;
-    virtual bool Generate() override;
-
-    
-    void SetNoteDuration(double duration);
-    void SetDynamics(bool loud);
+    void LoadSample(const std::wstring& filename, int midiNote);
+    void StartNote(int midiNote, double velocity);
+    void StopNote(int midiNote);
     void SetPedal(bool pressed);
-
-    virtual void SetNote(CNote* note) override;
+    void Generate(double* frame, int channels);
+    void SetDynamicRange(double minLevel, double maxLevel);
+    void SetEnvelope(double attack, double release);
+    void SetNote(CNote* note) override;
+    void Start() override;
+    bool Generate() override;
 
 private:
-   
-    void LoadSample(const std::string& filePath, int midiNote);
-
-   
-    double m_duration;
-    bool m_isLoud;
-    bool m_pedalPressed;
-
-    
-    std::map<int, std::vector<short>> m_samples;
+    std::map<int, Sample> m_samples;
+    Polyphony m_polyphony;
+    Pedal m_pedal;
+    Dynamics m_dynamics;
+    Envelope m_envelope;
+    CNote* m_currentNote;
+    double m_time = 0.0;
 };
-

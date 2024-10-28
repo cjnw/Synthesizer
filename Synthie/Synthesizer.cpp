@@ -13,6 +13,7 @@
 #include "ChorusEffect.h"
 #include "FlangerEffect.h"
 #include "CPianoInstrument.h"
+#include "CDrums.h"
 #include "COrgan.h"
 
 
@@ -142,7 +143,12 @@ bool CSynthesizer::Generate(double * frame)
 
 		else if (note->Instrument() == L"PianoInstrument")
 		{
-			instrument = new CPianoInstrument();
+			instrument = new CPianoInstrument(16);
+		}
+
+		else if (note->Instrument() == L"Drums")
+		{
+			instrument = new CDrums();
 		}
 
 		else if (note->Instrument() == L"Organ")

@@ -11,13 +11,20 @@ public:
     virtual bool Generate();
 
     void SetSource(CAudioNode* source) { m_source = source; }
-    void SetFrequency(double f) { m_frequency = f; }
+    void SetStartFrequency(double f) { m_startFrequency = f; }
+    void SetEndFrequency(double f) { m_endFrequency = f; }
     void SetBandwidth(double bw) { m_bandwidth = bw; }
+    void SetDuration(double duration) { m_duration = duration; }
 
 private:
+    void UpdateCoefficients();
+
     CAudioNode* m_source;
-    double m_frequency;
+    double m_startFrequency;
+    double m_endFrequency;
     double m_bandwidth;
+    double m_duration;
+    double m_time;
 
     double m_y1[2];
     double m_y2[2];

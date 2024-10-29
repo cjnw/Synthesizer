@@ -68,6 +68,6 @@ void CompressorEffect::Process(double* input, double* output)
     }
 
     // Apply gain reduction to input signal
-    output[0] = input[0] * m_gain;
-    output[1] = input[1] * m_gain;
+    output[0] = input[0] * m_gain * wetLevel + input[0] * dryLevel;
+    output[1] = input[1] * m_gain * wetLevel + input[1] * dryLevel;
 }

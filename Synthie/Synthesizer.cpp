@@ -158,7 +158,6 @@ bool CSynthesizer::Generate(double * frame)
 		{
 			instrument->SetSampleRate(GetSampleRate());
 			instrument->SetNote(note);
-			instrument->setWet(note->getWet());
 			instrument->SetEffectsManager(note->GetEffectsManager());
 			instrument->Start();
 			
@@ -170,13 +169,7 @@ bool CSynthesizer::Generate(double * frame)
 	}
 	//
 	// Phase 2: Clear all channels to silence 
-	//
-
-	for (int c = 0; c<GetNumChannels(); c++)
-	{
-		frame[c] = 0;
-	}
-
+	
 
     double channelframes[NUMEFFECTSCHANNELS][2];
 
@@ -212,17 +205,44 @@ bool CSynthesizer::Generate(double * frame)
 		// Call the generate function
 		if (instrument->Generate())
 		{
-			// If we returned true, we have a valid sample.  Add it 
-			// to the frame.
+			EffectsManager* effectsManager = instrument->GetEffectsManager();
 
-            for(int i=0;  i<NUMEFFECTSCHANNELS;  i++)
-            {
-                for(int c=0;  c< GetNumChannels();  c++)
-                {
-                    channelframes[i][c] += instrument->Frame(c) * instrument->Send(i);
-                }
-            }
+			for (int i = 0; i < NUMEFFECTSCHANNELS; i++) {
+				double wetLevel = effectsManager->WetLevel(i);
+				double dryLevel = effectsManager->DryLevel(i);
 
+				if (wetLevel > 0 || dryLevel > 0) {
+					double instrumentFrame[2] = { instrument->Frame(0), instrument->Frame(1) };
+					double effectOutput[2] = { dryLevel * instrumentFrame[0], dryLevel * instrumentFrame[1] };
+
+					if (i == 1) {
+						m_noiseGate->SetWet(wetLevel);
+						m_noiseGate->SetDry(dryLevel);
+						m_noiseGate->Process(instrumentFrame, effectOutput);
+					}
+					else if (i == 2) {
+						m_compressor->SetWet(wetLevel);
+						m_compressor->SetDry(dryLevel);
+						m_compressor->Process(instrumentFrame, effectOutput);
+					}
+					else if (i == 3) {
+						m_chorus->SetWet(wetLevel);
+						m_chorus->SetDry(dryLevel);
+						m_chorus->Process(instrumentFrame, effectOutput);
+					}
+					else if (i == 4) {
+						m_flanger->SetWet(wetLevel);
+						m_flanger->SetDry(dryLevel);
+						m_flanger->Process(instrumentFrame, effectOutput);
+					}
+
+					for (int c = 0; c < GetNumChannels(); c++)
+					{
+						 channelframes[i][c] += effectOutput[c];
+					}
+
+				}
+			}
 
 
 		}

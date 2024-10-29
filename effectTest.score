@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="4">
+    <!-- ToneInstrument Section -->
+    <instrument instrument="ToneInstrument">
+        <!-- Melodic Sequence with Effects -->
+        <note measure="1" beat="1" duration="1.5" gain="1.0" note="Bb4">
+           <effect which="compressor" wet="0.8" dry="0.2" />
+	  </note>
+        <note measure="2" beat="1.5" duration="1.5" gain="1.0" note="C5">
+           <effect which="noise-gate" wet="0.7" dry="0.3"/>
+
+</note>
+        <note measure="3" beat="2" duration="1.5"  gain="0.8"  note="D5">
+           <effect which="chorus" wet="0.7" dry="0.3"/>
+
+</note>
+
+        <note measure="4" beat="2.5" duration="1.5" gain="0.7"  note="Eb5">
+</note>
+
+        <note measure="5" beat="1" duration="1.0" gain="0.6" note="F5">
+           <effect which="flanger"  wet="0.6" dry="0.4"/>
+
+</note>
+
+        <note measure="6" beat="2" duration="1.0" gain="0.5" note="G5">
+</note>
+
+        <note measure="7" beat="1" duration="2.75" gain="0.4" note="A5">
+</note>
+
+        <note measure="8" beat="1.75" duration="0.75" gain="0.3"  note="Bb5"/>
+        <note measure="9" beat="2.5" duration="0.5" gain="0.1" note="C6"/>
+    </instrument>
+
+</score>

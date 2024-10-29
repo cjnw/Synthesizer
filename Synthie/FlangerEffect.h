@@ -23,8 +23,6 @@ private:
     double m_depth;        // Max delay modulation in samples
     double m_rate;         // LFO rate in Hz
     double m_feedback;     // Feedback amount
-    double m_wetLevel;
-    double m_dryLevel;
     double m_phase;
     double m_lastOutput[2];
 };

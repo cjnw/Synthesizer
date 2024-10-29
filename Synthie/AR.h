@@ -17,7 +17,7 @@ public:
 	void SetDuration(double d) { m_duration = d; }
 	virtual void Start();
 	virtual bool Generate();
-	void SetAttack(double attack);
+	void SetAttack(double attack) { m_attack = attack; }
 	void SetRelease(double release) { m_release = release; }
 
 };

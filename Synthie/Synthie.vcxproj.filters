@@ -126,6 +126,12 @@
     <ClCompile Include="CReson.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AdditiveSynthesizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Addpolyphony.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio\DirSound.h">
@@ -246,6 +252,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CReson.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AdditiveSynthesizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Addpolyphony.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,17 +1,17 @@
 #pragma once
-#include <vector>
-#include "Sample.h"
+#include "AdditiveSynthesizer.h"
+#include <memory>
 
-class Polyphony {
+class Addpolyphony {
 public:
-    Polyphony(int maxVoices);
-    void AddVoice(const Sample& sample, double velocity, double duration);
+    Addpolyphony(int maxVoices);
+    void AddVoice(const AdditiveSynthesizer& synth, double velocity, double duration);
     void StopVoice(int index);
     void Generate(double* frame, int channels);
 
 private:
     struct Voice {
-        Sample sample;
+        std::unique_ptr<AdditiveSynthesizer> synth;
         double velocity;
         double duration;
         bool active;

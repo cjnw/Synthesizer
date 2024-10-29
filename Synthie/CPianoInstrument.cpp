@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CPianoInstrument.h"
+#include <iostream>
 
 CPianoInstrument::CPianoInstrument(int maxVoices)
     : CInstrument(), m_polyphony(maxVoices), m_envelope(0.05, 0.05), m_currentNote(nullptr)
@@ -88,7 +89,6 @@ void CPianoInstrument::Start() {
 bool CPianoInstrument::Generate() {
     double frame[2] = { 0.0, 0.0 };
     Generate(frame, 2);
-
-    m_time += 1.0 / 44100.0; 
+    m_time += 1.0 / 44100.0;
     return m_envelope.IsActive(m_time);
 }

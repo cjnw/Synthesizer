@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "ctime": "cpp",
+        "xlocale": "cpp",
+        "xstring": "cpp",
+        "vector": "cpp"
+    }
+}

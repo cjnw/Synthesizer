@@ -28,7 +28,6 @@
 
         <note measure="7" beat="1" duration="2.75" gain="0.4" note="A5">
 </note>
-
         <note measure="8" beat="1.75" duration="0.75" gain="0.3"  note="Bb5"/>
         <note measure="9" beat="2.5" duration="0.5" gain="0.1" note="C6"/>
     </instrument>

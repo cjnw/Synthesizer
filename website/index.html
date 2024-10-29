@@ -86,6 +86,9 @@
         &lt;!-- Measure 1 --&gt;
         &lt;note measure="1" beat="1" duration="0.5" type="bass"/&gt;
         &lt;note measure="1" beat="2" duration="0.5" type="snare"/&gt;
+        &lt;note measure="1" beat="2" duration="0.5" gain="1.0" type="snare"&gt;
+            &lt;effect which="chorus" wet=".5" dry=".5" />
+        &lt;/note>
         ...
     &lt;/instrument&gt;
 &lt;/score&gt;
@@ -114,7 +117,7 @@
     </div>
     <div class="audio-player">
         <audio controls>
-            <source src="piano_demo.mp3" type="audio/mpeg">
+            <source src="piano_demo.wav"  type="audio/x-wav">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -141,7 +144,7 @@
     </div>
     <div class="audio-player">
         <audio controls>
-            <source src="organ_demo.mp3" type="audio/mpeg">
+            <source src="organ_demo.wav"  type="audio/x-wav">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -169,7 +172,7 @@
     </div>
     <div class="audio-player">
         <audio controls>
-            <source src="drums_demo.mp3" type="audio/mpeg">
+            <source src="drums_demo.wav"  type="audio/x-wav">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -196,7 +199,7 @@
     </div>
     <div class="audio-player">
         <audio controls>
-            <source src="synthesizer_demo.mp3" type="audio/mpeg">
+            <source src="synthesizer_demo.wav"  type="audio/x-wav">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -209,7 +212,11 @@
         <p>Owned by: Omar</p>
     </div>
     <p>
-        The effects component processes audio with effects like noise gate, flanger, chorus, and compressor, enhancing spatial depth and texture. By applying these effects selectively, this component transforms dry signals into immersive sounds, blending all components into a cohesive, resonant experience.
+        The effects component processes audio with effects like noise gate, flanger, chorus, and compressor, enhancing spatial depth.
+        This component receives streamed audio frames from the other mentioned components such as piano and/or drums, and applies effects.
+        We utilized other parameters such as wet and dry to determine the output that our frame will receive.
+        When determining the structure of our score file, we initially thought that applying effects on an entire score would be fine, but we later ended up processing effects on a note-by-note basis.
+        Each note can have multiple effects, and we process them in parallel.
     </p>
     <h4>Supported Grading Elements:</h4>
     <ul>
@@ -224,7 +231,7 @@
     </div>
     <div class="audio-player">
         <audio controls>
-            <source src="effects_demo.mp3" type="audio/mpeg">
+            <source src="effects_demo.wav"  type="audio/x-wav">
             Your browser does not support the audio element.
         </audio>
     </div>

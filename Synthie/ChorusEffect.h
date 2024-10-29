@@ -21,4 +21,5 @@ private:
     double m_depth;        // Depth of modulation in samples
     double m_rate;         // Modulation rate in Hz
     double m_phase;
+    int m_writeIndex;
 };

@@ -52,6 +52,6 @@ void NoiseGateEffect::Process(double* input, double* output)
     }
 
     // Apply gain to input signal
-    output[0] = input[0] * m_gain;
-    output[1] = input[1] * m_gain;
+    output[0] = input[0] * m_gain * wetLevel + dryLevel * input[0];
+    output[1] = input[1] * m_gain * wetLevel + dryLevel * input[1];
 }

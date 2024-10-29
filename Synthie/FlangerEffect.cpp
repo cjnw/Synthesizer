@@ -5,7 +5,7 @@
 const double M_PI = 3.14;
 
 FlangerEffect::FlangerEffect()
-    : m_bufferSize(0), m_depth(0.004 * 44100), m_rate(0.25), m_feedback(0.8), m_wetLevel(0.6), m_dryLevel(0.5), m_phase(0.0)
+    : m_bufferSize(0), m_depth(0.004 * 44100), m_rate(0.25), m_feedback(0.8), m_phase(0.0)
 {
     m_lastOutput[0] = m_lastOutput[1] = 0.0;
 }
@@ -38,16 +38,6 @@ void FlangerEffect::SetFeedback(double feedback)
     m_feedback = feedback;
 }
 
-void FlangerEffect::SetWet(double wetLevel)
-{
-    m_wetLevel = wetLevel;
-}
-
-void FlangerEffect::SetDry(double dryLevel)
-{
-    m_dryLevel = dryLevel;
-}
-
 void FlangerEffect::Process(double* input, double* output)
 {
     for (int c = 0; c < 2; ++c)
@@ -72,7 +62,7 @@ void FlangerEffect::Process(double* input, double* output)
         }
 
         // Combine dry and wet signals
-        output[c] = m_dryLevel * input[c] + m_wetLevel * delayedSample;
+        output[c] = dryLevel * input[c] + wetLevel * delayedSample;
 
         // Store last output for feedback
         m_lastOutput[c] = output[c];

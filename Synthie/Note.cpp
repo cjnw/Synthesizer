@@ -5,6 +5,7 @@
 
 CNote::CNote()
 {
+	m_gain = 1;
 }
 
 
@@ -54,6 +55,11 @@ void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 			value.ChangeType(VT_R8);
 			m_beat = value.dblVal - 1;
 		}
+		else  if (name == "gain")
+		{
+			value.ChangeType(VT_R8);
+			m_gain = value.dblVal;
+		}
 	}
 
 
@@ -72,6 +78,10 @@ void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 		}
 
 	}
+
+	effectManager->SetWetLevel(0, m_gain);
+	effectManager->SetDryLevel(0, m_gain);
+
 
 }
 bool CNote::operator<(const CNote &b)

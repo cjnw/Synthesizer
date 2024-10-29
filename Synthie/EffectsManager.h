@@ -11,25 +11,29 @@ public:
     EffectsManager() = default;
 
     // Copy constructor
-    EffectsManager(const EffectsManager& other) : sends(other.sends) {}
+    EffectsManager(const EffectsManager& other) : wetLevels(other.wetLevels), dryLevels(other.dryLevels) {}
 
     // Copy assignment operator
     EffectsManager& operator=(const EffectsManager& other) {
         if (this != &other) {
-            sends = other.sends; // Copy the sends vector
+            dryLevels = other.dryLevels; // Copy the vector
+            wetLevels = other.wetLevels; // Copy the vector
+
         }
         return *this;
     }
 
 	void addEffectXML(IXMLDOMNode* xml);
 
-	double Send(int i) { return sends[i]; }
-	void SetSend(int i, double value) { sends[i] = value; }
-
+    double WetLevel(int i) const { return wetLevels[i]; }
+    double DryLevel(int i) const { return dryLevels[i]; }
+    void SetWetLevel(int i, double value) { wetLevels[i] = value; }
+    void SetDryLevel(int i, double value) { dryLevels[i] = value; }
 
 
 private:
-	std::vector<double> sends;
+    std::vector<double> wetLevels;
+    std::vector<double> dryLevels;
 
 };
 

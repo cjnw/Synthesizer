@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: A Multi-Component Music Synthesizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .main-section, .component-section {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .component-section {
+            border-left: 5px solid #007acc;
+        }
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .component-header h3 {
+            margin: 0;
+            color: #007acc;
+        }
+        .download-link, .audio-player {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .download-link a {
+            color: #007acc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .download-link a:hover {
+            text-decoration: underline;
+        }
+        .audio-player audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        pre {
+            background-color: #e8e8e8;
+            padding: 15px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Project 1: A Multi-Component Music Synthesizer</h1>
+<h2>Group Members: Omar, Muhammad, Hamil, CJ, Raama</h2>
+
+<div class="main-section">
+    <h2>Main Score File</h2>
+    <div class="download-link">
+        <a href="main_score.score" download>Download Main Score File</a>
+    </div>
+</div>
+
+<h2>.score File Layout</h2>
+<p>This is an example of how our .score files are structured, featuring different musical elements:</p>
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;score bpm="120" beatspermeasure="4"&gt;
+    &lt;instrument instrument="Drums"&gt;
+        &lt;!-- Measure 1 --&gt;
+        &lt;note measure="1" beat="1" duration="0.5" type="bass"/&gt;
+        &lt;note measure="1" beat="2" duration="0.5" type="snare"/&gt;
+        &lt;note measure="1" beat="2" duration="0.5" gain="1.0" type="snare"&gt;
+            &lt;effect which="chorus" wet=".5" dry=".5" />
+        &lt;/note>
+        ...
+    &lt;/instrument&gt;
+&lt;/score&gt;
+    </pre>
+
+<h2>Components</h2>
+
+<!-- Piano Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Piano Component</h3>
+        <p>Owned by: Muhammad</p>
+    </div>
+    <p>
+        The piano component synthesizes melodic piano sounds with dynamic velocity control, simulating expressive playing. Each note's timing, pitch, and intensity are manipulated to create a realistic piano feel. This component is foundational to the musical piece, providing harmonic structure.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Plays piano notes</li>
+        <li>Envelope generation</li>
+        <li>Basic dynamics</li>
+        <li>Advanced dynamics</li>
+    </ul>
+    <div class="download-link">
+        <a href="piano_component.score" download>Download Piano Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="piano_demo.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<!-- Organ Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Organ Component</h3>
+        <p>Owned by: CJ</p>
+    </div>
+    <p>
+        The organ component generates sustained tones with modulated overtones, recreating a classic organ sound. By controlling parameters such as tonewheel harmonics and vibrato, this component adds warmth and depth, often used to enrich the harmonic texture within the composition.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Tonewheels</li>
+        <li>Drawbars</li>
+        <li>Envelope generation</li>
+        <li>Vibrato</li>
+    </ul>
+    <div class="download-link">
+        <a href="organ_component.score" download>Download Organ Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="organ_demo.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<!-- Drums Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Drums Component</h3>
+        <p>Owned by: Hamil</p>
+    </div>
+    <p>
+        This component provides rhythm through synthesized drum sounds like bass, snare, and cymbals. With diverse timing, tempo, and intensity, it creates a rhythmic backbone that defines the tempo and pulse of the piece, incorporating both regular beats and complex rhythmic variations.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Waveform playback from tables</li>
+        <li>Envelope generation</li>
+        <li>Varying pitch playback from tables</li>
+        <li>20 distinct drum sounds</li>
+        <li>Synthesized drum sounds</li>
+    </ul>
+    <div class="download-link">
+        <a href="drums_component.score" download>Download Drums Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="drums_demo.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<!-- Scratching Synthesizer Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Scratching Synthesizer Component</h3>
+        <p>Owned by: Raama</p>
+    </div>
+    <p>
+        The scratching synthesizer produces unique, percussive "scratching" effects often associated with turntablism. This component modulates pitch and speed dynamically to create rhythmic scratches, adding a modern and experimental element to the synthesizer ensemble.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Audio playback on demand from the sequencer</li>
+        <li>Attack and decay with pitch variation</li>
+        <li>2 Scratch methods simulated</li>
+        <li>4 Scratch methods simulated</li>
+    </ul>
+    <div class="download-link">
+        <a href="synthesizer_component.score" download>Download Synthesizer Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="synthesizer_demo.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<!-- Effects Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Effects Component</h3>
+        <p>Owned by: Omar</p>
+    </div>
+    <p>
+        The effects component processes audio with effects like noise gate, flanger, chorus, and compressor, enhancing spatial depth.
+        This component receives streamed audio frames from the other mentioned components such as piano and/or drums, and applies effects.
+        We utilized other parameters such as wet and dry to determine the output that our frame will receive.
+        When determining the structure of our score file, we initially thought that applying effects on an entire score would be fine, but we later ended up processing effects on a note-by-note basis.
+        Each note can have multiple effects, and we process them in parallel.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Audio passes through component</li>
+        <li>1 Effect</li>
+        <li>3 Effects</li>
+        <li>Controllable effects send</li>
+        <li>4 Effects (Noise Gate, Flanger, Chorus, Compressor)</li>
+    </ul>
+    <div class="download-link">
+        <a href="effects_component.score" download>Download Effects Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="effects_demo.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+</body>
+</html>

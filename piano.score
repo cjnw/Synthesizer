@@ -1,65 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <score bpm="120" beatspermeasure="4">
-    <instrument instrument="ToneInstrument">
-        <!-- Measure 1 -->
-        <note measure="1" beat="1" duration="0.5" note="C4" velocity="100"/> <!-- Note with velocity for dynamics -->
-        <note measure="1" beat="1" duration="0.5" note="E4" velocity="100"/>
-        <note measure="1" beat="1" duration="0.5" note="G4" velocity="100"/>
-        <note measure="1" beat="1.5" duration="0.5" note="C5" velocity="100"/>
-
+    <instrument instrument="PianoInstrument">
+        <!-- Measure 1 - Simple C chord with pedal -->
+        <note measure="1" beat="1" duration="0.5" note="C4" velocity="80"/>
+        <note measure="1" beat="1" duration="0.5" note="E4" velocity="80"/>
+        <note measure="1" beat="1" duration="0.5" note="G4" velocity="80"/>
+        
         <!-- Pedal Press -->
         <pedal action="press" measure="1" beat="1"/>
-
-        <!-- Measure 2 -->
-        <note measure="2" beat="1" duration="0.5" note="D4" velocity="100"/>
-        <note measure="2" beat="1.5" duration="0.5" note="F4" velocity="100"/>
-        <note measure="2" beat="2" duration="0.5" note="A4" velocity="100"/>
-        <note measure="2" beat="2.5" duration="0.5" note="D5" velocity="100"/>
-
-        <!-- Measure 3 -->
-        <note measure="3" beat="1" duration="0.5" note="E4" velocity="100"/>
-        <note measure="3" beat="1.5" duration="0.5" note="G4" velocity="100"/>
-        <note measure="3" beat="2" duration="0.5" note="B4" velocity="100"/>
-        <note measure="3" beat="2.5" duration="0.5" note="E5" velocity="100"/>
-
-        <!-- Measure 4 -->
-        <note measure="4" beat="1" duration="0.5" note="F4" velocity="100"/>
-        <note measure="4" beat="1.5" duration="0.5" note="A4" velocity="100"/>
-        <note measure="4" beat="2" duration="0.5" note="C5" velocity="100"/>
-        <note measure="4" beat="2.5" duration="0.5" note="F5" velocity="100"/>
-
-        <!-- Pedal Release -->
-        <pedal action="release" measure="4" beat="2"/>
-
-        <!-- Measure 5 -->
-        <note measure="5" beat="1" duration="0.5" note="G4" velocity="100"/>
-        <note measure="5" beat="1" duration="0.5" note="B4" velocity="100"/>
-        <note measure="5" beat="1" duration="0.5" note="D5" velocity="100"/>
-        <note measure="5" beat="1.5" duration="0.5" note="G5" velocity="100"/>
-
-        <!-- Measure 6 -->
-        <note measure="6" beat="1" duration="1" note="A4" velocity="100"/>
-        <note measure="6" beat="2" duration="1" note="C5" velocity="100"/>
-
-        <!-- Measure 7 -->
-        <note measure="7" beat="1" duration="2" note="Bb4" velocity="100"/>
-        <note measure="7" beat="1" duration="2" note="D5" velocity="100"/>
-        <note measure="7" beat="1" duration="2" note="F5" velocity="100"/>
-
-        <!-- Measure 8 -->
-        <note measure="8" beat="1" duration="3" note="C5" velocity="100"/>
-        <note measure="8" beat="1" duration="3" note="E5" velocity="100"/>
-        <note measure="8" beat="1" duration="3" note="G5" velocity="100"/>
-
-        <!-- Pedal Noise -->
-        <note measure="1" beat="1" duration="0.1" note="PedalNoiseDown" velocity="80"/> <!-- Pedal down noise -->
-        <note measure="4" beat="2" duration="0.1" note="PedalNoiseUp" velocity="80"/>   <!-- Pedal up noise -->
-
-        <!-- Dynamic Markings -->
-        <dynamics>
-            <dynamic measure="1" beat="1" level="mf"/> <!-- Mezzo-forte -->
-            <dynamic measure="3" beat="1" level="f"/>  <!-- Forte -->
-            <dynamic measure="5" beat="1" level="p"/>  <!-- Piano -->
-        </dynamics>
+        
+        <!-- Measure 2 - Adding a higher note while pedal is still pressed -->
+        <note measure="2" beat="1" duration="0.5" note="C5" velocity="90"/>
+        
+        <!-- Measure 3 - Quick notes to test polyphony without pedal -->
+        <pedal action="release" measure="3" beat="1"/>
+        <note measure="3" beat="1" duration="0.25" note="D4" velocity="70"/>
+        <note measure="3" beat="1.5" duration="0.25" note="F4" velocity="70"/>
+        <note measure="3" beat="2" duration="0.25" note="A4" velocity="70"/>
+        <note measure="3" beat="2.5" duration="0.25" note="E4" velocity="70"/>
+        
+        <!-- Measure 4 - Chord with varying dynamics -->
+        <note measure="4" beat="1" duration="1.0" note="C4" velocity="60"/>
+        <note measure="4" beat="1" duration="1.0" note="E4" velocity="100"/>
+        <note measure="4" beat="1" duration="1.0" note="G4" velocity="120"/>
+        
+        <!-- Measure 5 - Higher notes with pedal -->
+        <pedal action="press" measure="5" beat="1"/>
+        <note measure="5" beat="1" duration="1.0" note="C6" velocity="90"/>
+        <note measure="5" beat="2" duration="0.5" note="E6" velocity="80"/>
+        <note measure="5" beat="2.5" duration="0.5" note="G6" velocity="100"/>
+        
+        <!-- Measure 6 - Final chord with pedal release -->
+        <pedal action="release" measure="6" beat="1"/>
+        <note measure="6" beat="1" duration="1.0" note="C4" velocity="90"/>
+        <note measure="6" beat="1" duration="1.0" note="G4" velocity="90"/>
+        <note measure="6" beat="1" duration="1.0" note="C5" velocity="90"/>
     </instrument>
 </score>

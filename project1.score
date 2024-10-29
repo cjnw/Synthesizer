@@ -1,42 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <score bpm="120" beatspermeasure="4">
+    <!-- ToneInstrument Section -->
     <instrument instrument="ToneInstrument">
-        <!-- Section 1: Introduction -->
-        <note measure="1" beat="1" duration="0.5" wet="0.8" dry="0.2" note="Bb4"/>
-        <note measure="1" beat="1.5" duration="0.5" wet="0.8" dry="0.2" note="C5"/>
-        <note measure="1" beat="2" duration="0.5" wet="0.8" dry="0.2" note="D5"/>
-        <note measure="1" beat="2.5" duration="0.5" wet="0.8" dry="0.2" note="Eb5"/>
-        
-        <note measure="2" beat="1" duration="1.0" wet="0.9" dry="0.1" note="F5"/>
-        <note measure="2" beat="2" duration="1.0" wet="0.9" dry="0.1" note="G5"/>
-        
-        <note measure="3" beat="1" duration="0.75" wet="0.85" dry="0.15" note="A5"/>
-        <note measure="3" beat="1.75" duration="0.75" wet="0.85" dry="0.15" note="Bb5"/>
-        <note measure="3" beat="2.5" duration="0.5" wet="0.85" dry="0.15" note="C6"/>
-        
-        <note measure="4" beat="1" duration="1.5" wet="0.9" dry="0.1" note="D6"/>
-        <note measure="4" beat="2.5" duration="0.5" wet="0.9" dry="0.1" note="Eb6"/>
-        
-        <note measure="5" beat="1" duration="0.5" wet="1.0" dry="0.0" note="F6"/>
-        <note measure="5" beat="1.5" duration="0.5" wet="1.0" dry="0.0" note="G6"/>
-        <note measure="5" beat="2" duration="0.5" wet="1.0" dry="0.0" note="A6"/>
-        <note measure="5" beat="2.5" duration="0.5" wet="1.0" dry="0.0" note="Bb6"/>
-        
-        <note measure="6" beat="1" duration="1.0" wet="1.0" dry="0.0" note="C7"/>
-        <note measure="6" beat="2" duration="1.0" wet="1.0" dry="0.0" note="D7"/>
-        
-        <note measure="7" beat="1" duration="0.75" wet="0.85" dry="0.15" note="Eb6"/>
-        <note measure="7" beat="1.75" duration="0.75" wet="0.85" dry="0.15" note="D6"/>
-        <note measure="7" beat="2.5" duration="0.5" wet="0.85" dry="0.15" note="C6"/>
-        
-        <note measure="8" beat="1" duration="1.5" wet="0.9" dry="0.1" note="Bb5"/>
-        <note measure="8" beat="2.5" duration="0.5" wet="0.9" dry="0.1" note="A5"/>
-        
-        <note measure="9" beat="1" duration="4.0" wet="0.95" dry="0.05" note="Bb4"/>
-        
-        <effect which="noise-gate" send="0.7" main="0.3" threshold="0.05" attackTime="0.005" releaseTime="0.2"/>
-        <effect which="compressor" send="0.8" main="0.2" threshold="0.4" ratio="6.0" attackTime="0.002" releaseTime="0.3"/>
-        <effect which="chorus" send="0.7" main="0.3" depth="0.005" rate="0.5" wet="0.7" dry="0.3"/>
-        <effect which="flanger" send="0.6" main="0.4" depth="0.004" rate="0.6" feedback="0.8" wet="0.6" dry="0.4"/>
+        <!-- Measure 1 -->
+        <note measure="1" beat="1" duration="0.5" gain="1.0" note="C4">
+            <effect which="compressor" wet="0.8" dry="0.2" />
+            <effect which="chorus" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="1" beat="1.5" duration="0.5" gain="0.9" note="D4"/>
+        <note measure="1" beat="2" duration="0.5" gain="0.8" note="E4">
+            <effect which="flanger" wet="0.6" dry="0.4"/>
+        </note>
+        <note measure="1" beat="2.5" duration="0.5" gain="0.7" note="F4"/>
+        <note measure="1" beat="3" duration="0.5" gain="0.6" note="G4"/>
+        <note measure="1" beat="3.5" duration="0.5" gain="0.5" note="A4"/>
+
+        <!-- Measure 2 -->
+        <note measure="2" beat="1" duration="0.5" gain="1.0" note="Bb4">
+            <effect which="noise-gate" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="2" beat="1.5" duration="0.5" gain="0.9" note="C5"/>
+        <note measure="2" beat="2" duration="0.5" gain="0.8" note="D5"/>
+        <note measure="2" beat="2.5" duration="0.5" gain="0.7" note="Eb5"/>
+        <note measure="2" beat="3" duration="0.5" gain="0.6" note="F5"/>
+        <note measure="2" beat="3.5" duration="0.5" gain="0.5" note="G5"/>
+
+        <!-- Measure 3 -->
+        <note measure="3" beat="1" duration="0.5" gain="1.0" note="A4"/>
+        <note measure="3" beat="1.5" duration="0.5" gain="0.9" note="Bb4">
+            <effect which="compressor" wet="0.8" dry="0.2" />
+        </note>
+        <note measure="3" beat="2" duration="0.5" gain="0.8" note="C6"/>
+        <note measure="3" beat="2.5" duration="0.5" gain="0.7" note="D6">
+            <effect which="chorus" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="3" beat="3" duration="0.5" gain="0.6" note="Eb6"/>
+        <note measure="3" beat="3.5" duration="0.5" gain="0.5" note="F6"/>
+
+        <!-- Measure 4 -->
+        <note measure="4" beat="1" duration="0.5" gain="1.0" note="G6">
+            <effect which="flanger" wet="0.6" dry="0.4"/>
+        </note>
+        <note measure="4" beat="1.5" duration="0.5" gain="0.9" note="A6"/>
+        <note measure="4" beat="2" duration="0.5" gain="0.8" note="Bb6">
+            <effect which="noise-gate" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="4" beat="2.5" duration="0.5" gain="0.7" note="C7"/>
+        <note measure="4" beat="3" duration="0.5" gain="0.6" note="D7"/>
+        <note measure="4" beat="3.5" duration="0.5" gain="0.5" note="Eb7"/>
+
+        <!-- Measure 5 -->
+        <note measure="5" beat="1" duration="0.5" gain="1.0" note="F7"/>
+        <note measure="5" beat="1.5" duration="0.5" gain="0.9" note="G7">
+            <effect which="compressor" wet="0.8" dry="0.2" />
+        </note>
+        <note measure="5" beat="2" duration="0.5" gain="0.8" note="A7"/>
+        <note measure="5" beat="2.5" duration="0.5" gain="0.7" note="Bb7">
+            <effect which="chorus" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="5" beat="3" duration="0.5" gain="0.6" note="C8"/>
+        <note measure="5" beat="3.5" duration="0.5" gain="0.5" note="D8"/>
+
+        <!-- Measure 6 -->
+        <note measure="6" beat="1" duration="0.5" gain="1.0" note="Eb8">
+            <effect which="flanger" wet="0.6" dry="0.4"/>
+        </note>
+        <note measure="6" beat="1.5" duration="0.5" gain="0.9" note="F8"/>
+        <note measure="6" beat="2" duration="0.5" gain="0.8" note="G8">
+            <effect which="noise-gate" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="6" beat="2.5" duration="0.5" gain="0.7" note="A8"/>
+        <note measure="6" beat="3" duration="0.5" gain="0.6" note="Bb8"/>
+        <note measure="6" beat="3.5" duration="0.5" gain="0.5" note="C9"/>
+
+        <!-- Measure 7 -->
+        <note measure="7" beat="1" duration="0.5" gain="1.0" note="D9"/>
+        <note measure="7" beat="1.5" duration="0.5" gain="0.9" note="Eb9">
+            <effect which="compressor" wet="0.8" dry="0.2" />
+        </note>
+        <note measure="7" beat="2" duration="0.5" gain="0.8" note="F9"/>
+        <note measure="7" beat="2.5" duration="0.5" gain="0.7" note="G9">
+            <effect which="chorus" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="7" beat="3" duration="0.5" gain="0.6" note="A9"/>
+        <note measure="7" beat="3.5" duration="0.5" gain="0.5" note="Bb9"/>
+
+        <!-- Measure 8 -->
+        <note measure="8" beat="1" duration="0.5" gain="1.0" note="C10"/>
+        <note measure="8" beat="1.5" duration="0.5" gain="0.9" note="D10">
+            <effect which="flanger" wet="0.6" dry="0.4"/>
+        </note>
+        <note measure="8" beat="2" duration="0.5" gain="0.8" note="Eb10">
+            <effect which="noise-gate" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="8" beat="2.5" duration="0.5" gain="0.7" note="F10"/>
+        <note measure="8" beat="3" duration="0.5" gain="0.6" note="G10"/>
+        <note measure="8" beat="3.5" duration="0.5" gain="0.5" note="A10"/>
+
+        <!-- Measure 9 -->
+        <note measure="9" beat="1" duration="0.5" gain="1.0" note="Bb10">
+            <effect which="compressor" wet="0.8" dry="0.2" />
+        </note>
+        <note measure="9" beat="1.5" duration="0.5" gain="0.9" note="C11"/>
+        <note measure="9" beat="2" duration="0.5" gain="0.8" note="D11">
+            <effect which="chorus" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="9" beat="2.5" duration="0.5" gain="0.7" note="Eb11"/>
+        <note measure="9" beat="3" duration="0.5" gain="0.6" note="F11"/>
+        <note measure="9" beat="3.5" duration="0.5" gain="0.5" note="G11"/>
+
+
+        <note measure="10" beat="1" duration="0.5" gain="1.0" note="A11">
+            <effect which="flanger" wet="0.6" dry="0.4"/>
+        </note>
+        <note measure="10" beat="1.5" duration="0.5" gain="0.9" note="Bb11"/>
+        <note measure="10" beat="2" duration="0.5" gain="0.8" note="C12">
+            <effect which="noise-gate" wet="0.7" dry="0.3"/>
+        </note>
+        <note measure="10" beat="2.5" duration="0.5" gain="0.7" note="D12"/>
+        <note measure="10" beat="3" duration="0.5" gain="0.6" note="Eb12"/>
+        <note measure="10" beat="3.5" duration="0.5" gain="0.5" note="F12"/>
+        -->
+    </instrument>
+
+    <!-- Drums Section -->
+    <instrument instrument="Drums">
+        <!-- Measure 1 - Snare Showcase -->
+        <note measure="1" beat="1" duration="0.5" type="snare"/>
+        <note measure="1" beat="2" duration="0.5" type="snare"/>
+        <note measure="1" beat="3" duration="0.5" type="snare"/>
+        <note measure="1" beat="4" duration="0.5" type="snare"/>
+
+        <!-- Measure 2 - Bass Showcase -->
+        <note measure="2" beat="1" duration="0.5" type="bass"/>
+        <note measure="2" beat="2" duration="0.5" type="bass"/>
+        <note measure="2" beat="3" duration="0.5" type="bass"/>
+        <note measure="2" beat="4" duration="0.5" type="bass"/>
+
+        <!-- Measure 3 - Medium Tom -->
+        <note measure="3" beat="1" duration="0.5" type="medium_tom"/>
+        <note measure="3" beat="2" duration="0.5" type="medium_tom"/>
+        <note measure="3" beat="3" duration="0.5" type="medium_tom"/>
+        <note measure="3" beat="4" duration="0.5" type="medium_tom"/>
+
+        <!-- Measure 4 - High Tom -->
+        <note measure="4" beat="1" duration="0.5" type="high_tom"/>
+        <note measure="4" beat="2" duration="0.5" type="high_tom"/>
+        <note measure="4" beat="3" duration="0.5" type="high_tom"/>
+        <note measure="4" beat="4" duration="0.5" type="high_tom"/>
+
+        <!-- Measure 5 - Cymbal Showcase -->
+        <note measure="5" beat="1" duration="0.5" type="cymbal"/>
+        <note measure="5" beat="2" duration="0.5" type="cymbal"/>
+        <note measure="5" beat="3" duration="0.5" type="cymbal"/>
+        <note measure="5" beat="4" duration="0.5" type="cymbal"/>
+
+        <!-- Measure 6 - Complex Rhythm -->
+        <note measure="6" beat="1" duration="0.25" type="cymbal"/>
+        <note measure="6" beat="1.5" duration="0.25" type="tom"/>
+        <note measure="6" beat="2" duration="0.5" type="snare"/>
+        <note measure="6" beat="3" duration="0.5" type="bass"/>
+        <note measure="6" beat="3.5" duration="0.25" type="cymbal"/>
+        <note measure="6" beat="4" duration="0.5" type="snare"/>
+
+        <!-- Measure 7 -->
+        <note measure="7" beat="1" duration="0.5" type="snare"/>
+        <note measure="7" beat="2" duration="0.5" type="bass"/>
+        <note measure="7" beat="3" duration="0.5" type="tom"/>
+        <note measure="7" beat="4" duration="0.5" type="cymbal"/>
+
+        <!-- Measure 8 -->
+        <note measure="8" beat="1" duration="0.5" type="high_tom"/>
+        <note measure="8" beat="2" duration="0.5" type="snare"/>
+        <note measure="8" beat="3" duration="0.5" type="bass"/>
+        <note measure="8" beat="4" duration="0.5" type="cymbal"/>
+
+        <!-- Measure 9 -->
+        <note measure="9" beat="1" duration="0.5" type="cymbal"/>
+        <note measure="9" beat="2" duration="0.5" type="snare"/>
+        <note measure="9" beat="3" duration="0.5" type="bass"/>
+        <note measure="9" beat="4" duration="0.5" type="tom"/>
+
+        <!-- Measure 10 -->
+        <note measure="10" beat="1" duration="0.5" type="cymbal"/>
+        <note measure="10" beat="2" duration="0.5" type="snare"/>
+        <note measure="10" beat="3" duration="0.5" type="bass"/>
+        <note measure="10" beat="4" duration="0.5" type="high_tom"/>
+
+
+        <note measure="11" beat="1" duration="0.5" type="snare"/>
+        <note measure="11" beat="2" duration="0.5" type="bass"/>
+        <note measure="11" beat="3" duration="0.5" type="tom"/>
+        <note measure="11" beat="4" duration="0.5" type="cymbal"/>
+
+        <note measure="12" beat="1" duration="0.5" type="high_tom"/>
+        <note measure="12" beat="2" duration="0.5" type="snare"/>
+        <note measure="12" beat="3" duration="0.5" type="bass"/>
+        <note measure="12" beat="4" duration="0.5" type="cymbal"/>
+
     </instrument>
 </score>

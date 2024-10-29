@@ -25,6 +25,8 @@ public:
 	double GetVelocity() const { return m_velocity; }
 	void SetVelocity(double velocity) { m_velocity = velocity; }
 
+	double GetGain() { return m_gain; }
+
 	bool operator<(const CNote &b);
 private:
 	std::wstring m_instrument;
@@ -32,7 +34,8 @@ private:
 	double m_beat;
     double m_dryLevel;
     double m_wetLevel;
-	int m_pitch;                
+	int m_pitch;      
+	double m_gain;
 	double m_velocity;
 	CComPtr<IXMLDOMNode> m_node;
 	std::shared_ptr<EffectsManager> m_effectsManager;

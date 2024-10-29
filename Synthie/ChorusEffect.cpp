@@ -4,7 +4,7 @@
 
 double M_PI = 3.14;
 ChorusEffect::ChorusEffect()
-    : m_bufferSize(0), m_depth(0.002 * 44100), m_rate(0.5), m_wetLevel(0.5), m_dryLevel(0.5), m_phase(0.0)
+    : m_bufferSize(0), m_depth(0.002 * 44100), m_rate(0.5), m_phase(0.0)
 {
 }
 
@@ -30,15 +30,7 @@ void ChorusEffect::SetRate(double rate)
     m_rate = rate;
 }
 
-void ChorusEffect::SetWet(double wetLevel)
-{
-    m_wetLevel = wetLevel;
-}
 
-void ChorusEffect::SetDry(double dryLevel)
-{
-    m_dryLevel = dryLevel;
-}
 
 void ChorusEffect::Process(double* input, double* output)
 {
@@ -62,7 +54,7 @@ void ChorusEffect::Process(double* input, double* output)
         double delayedSample = m_delayBuffer[c][readIndex];
 
         // Combine dry and wet signals
-        output[c] = m_dryLevel * input[c] + m_wetLevel * delayedSample;
+        output[c] = dryLevel * input[c] + wetLevel * delayedSample;
     }
 
     // Advance phase

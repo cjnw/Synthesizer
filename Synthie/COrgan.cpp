@@ -26,6 +26,7 @@ void COrgan::Start()
 {
     m_sinewave.SetSampleRate(GetSampleRate());
     m_sinewave.Start();
+    m_ar.SetSource(&m_sinewave);
     m_ar.SetSampleRate(GetSampleRate());
     m_ar.Start();
     m_time = 0;
@@ -64,21 +65,26 @@ bool COrgan::Generate()
     }
 
     // Generate the organ sound by adding harmonics
-    double sample = 0;
+    double sampleL = 0;
+    double sampleR = 0;
     for (int i = 0; i < 9; i++)
     {
         m_sinewave.SetFreq(m_frequency * harmonics[i] * vibrato);
         m_sinewave.Generate();
-        sample += amplitudes[i] * m_sinewave.Frame(0);
+        sampleL += amplitudes[i] * m_sinewave.Frame(0);
+        sampleR += amplitudes[i] * m_sinewave.Frame(1);
     }
 
     // Apply envelope
     m_ar.Generate();
-    double envelope = m_ar.Frame(0);
-    sample *= envelope;
+    m_ar.SetDuration(m_duration);
+    double envelope1 = m_ar.Frame(0);
+    double envelope2 = m_ar.Frame(1);
+    sampleL *= envelope1;
+    sampleR *= envelope2;
 
-    m_frame[0] = sample;
-    m_frame[1] = sample;
+    m_frame[0] = sampleL;
+    m_frame[1] = sampleR;
 
     // Advance time
     m_time += GetSamplePeriod();
@@ -120,13 +126,14 @@ void COrgan::SetNote(CNote* note)
             value.ChangeType(VT_R8);
             // SetDuration(value.dblVal); // play the note for the duration in terms of seconds
             m_ar.SetDuration(value.dblVal * (NUM_SECS_IN_MINUTE / m_bpm));
+            m_duration = value.dblVal * (NUM_SECS_IN_MINUTE / m_bpm);
 
         }
         else if (name == "note")
         {
             SetFreq(NoteToFrequency(value.bstrVal));
         }
-        else if (name == "drawbar")
+        else if (name == "drawbars")
         {
             m_drawbars = value.bstrVal;
         }

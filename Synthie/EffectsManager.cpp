@@ -60,6 +60,10 @@ void EffectsManager::addEffectXML(IXMLDOMNode* xml) {
         }
     }
     int effectIndex = GetEffectIndexFromName(effectName);
+    if (effectIndex < 0) {
+        return;
+    }
+
     SetWetLevel(effectIndex, wetLevel);
     SetDryLevel(effectIndex, dryLevel);
 }

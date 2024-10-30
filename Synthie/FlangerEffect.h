@@ -24,5 +24,6 @@ private:
     double m_rate;         // LFO rate in Hz
     double m_feedback;     // Feedback amount
     double m_phase;
+    int m_writeIndex;
     double m_lastOutput[2];
 };

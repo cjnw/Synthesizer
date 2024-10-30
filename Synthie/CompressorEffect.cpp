@@ -3,7 +3,11 @@
 #include <cmath>
 
 CompressorEffect::CompressorEffect()
-    : m_threshold(0.4), m_ratio(6.0), m_attackTime(0.002), m_releaseTime(0.3), m_gain(1.0)
+    : m_threshold(0.2),       // Threshold at which compression starts
+    m_ratio(10),           // Compression ratio
+    m_attackTime(0.002),    // Fast attack for quick response to loud sounds
+    m_releaseTime(0.3),     // Moderate release for natural decay
+    m_gain(1.5)
 {
 }
 
@@ -16,7 +20,7 @@ void CompressorEffect::Start()
     // Calculate coefficients based on attack and release times
     m_attackCoef = exp(-1.0 / (m_attackTime * m_sampleRate));
     m_releaseCoef = exp(-1.0 / (m_releaseTime * m_sampleRate));
-    m_gain = 1.0;
+  //  m_gain = 1.0; // Start with no gain reduction
 }
 
 void CompressorEffect::SetThreshold(double threshold)
@@ -44,18 +48,18 @@ void CompressorEffect::Process(double* input, double* output)
     // Calculate the input level (RMS of both channels)
     double inputLevel = sqrt(0.5 * (input[0] * input[0] + input[1] * input[1]));
 
-    // Calculate the amount of gain reduction
+    // Calculate gain reduction only if inputLevel exceeds threshold
     double gainReduction = 1.0;
     if (inputLevel > m_threshold)
     {
-        // Apply compression
+        // Adjusted compression calculation for stronger reduction
         double excess = inputLevel - m_threshold;
-        double compressedExcess = excess / m_ratio;
+        double compressedExcess = excess * (1.0 - 1.0 / m_ratio); // More aggressive compression
         double targetLevel = m_threshold + compressedExcess;
-        gainReduction = targetLevel / inputLevel;
+        gainReduction = targetLevel / (inputLevel + 1e-6); // Add epsilon to avoid division by zero
     }
 
-    // Smooth gain changes
+    // Smooth gain changes with attack and release coefficients
     if (gainReduction < m_gain)
     {
         // Attack (gain reducing)
@@ -67,7 +71,8 @@ void CompressorEffect::Process(double* input, double* output)
         m_gain = m_gain * m_releaseCoef + gainReduction * (1.0 - m_releaseCoef);
     }
 
-    // Apply gain reduction to input signal
-    output[0] = input[0] * m_gain * wetLevel + input[0] * dryLevel;
-    output[1] = input[1] * m_gain * wetLevel + input[1] * dryLevel;
+    // Apply smoothed gain reduction with wet/dry mix and a makeup gain factor
+    double makeupGain = 1.5; // Increase for more prominent compression effect
+    output[0] = input[0] * (m_gain * wetLevel * makeupGain) + (input[0] * dryLevel);
+    output[1] = input[1] * (m_gain * wetLevel * makeupGain) + (input[1] * dryLevel);
 }

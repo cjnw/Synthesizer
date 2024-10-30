@@ -11,7 +11,7 @@ public:
 
 private:
     struct Voice {
-        std::unique_ptr<AdditiveSynthesizer> synth;
+        //std::unique_ptr<AdditiveSynthesizer> synth;
         double velocity;
         double duration;
         bool active;

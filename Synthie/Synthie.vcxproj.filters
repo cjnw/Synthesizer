@@ -75,12 +75,6 @@
     <ClCompile Include="AR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EchoEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReverbEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CDrums.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -203,12 +197,6 @@
     <ClInclude Include="AR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EchoEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ReverbEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CDrums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -252,12 +240,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CReson.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AdditiveSynthesizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Addpolyphony.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

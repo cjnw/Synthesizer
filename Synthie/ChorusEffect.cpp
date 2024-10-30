@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "ChorusEffect.h"
 #include <cmath>
+#include <vector>
 
-double M_PI = 3.14;
+double pi = 3.14159265358979323846;
+
 ChorusEffect::ChorusEffect()
-    : m_bufferSize(0), m_depth(0.002 * 44100), m_rate(0.5), m_wetLevel(0.5), m_dryLevel(0.5), m_phase(0.0)
+    : m_bufferSize(0), m_depth(0.002 * 44100), m_rate(0.5), m_phase(0.0), m_writeIndex(0)
 {
 }
 
@@ -14,15 +16,17 @@ ChorusEffect::~ChorusEffect()
 
 void ChorusEffect::Start()
 {
-    m_bufferSize = static_cast<size_t>((m_depth * 2 + 0.05 * m_sampleRate)); // Buffer large enough for modulation
+    // Initialize buffer size with a margin
+    m_bufferSize = static_cast<size_t>(m_depth + 0.05 * m_sampleRate);
     m_delayBuffer[0].resize(m_bufferSize, 0.0);
     m_delayBuffer[1].resize(m_bufferSize, 0.0);
+    m_writeIndex = 0;
     m_phase = 0.0;
 }
 
 void ChorusEffect::SetDepth(double depth)
 {
-    m_depth = depth * m_sampleRate; // Convert from seconds to samples
+    m_depth = depth * m_sampleRate; // Depth in samples
 }
 
 void ChorusEffect::SetRate(double rate)
@@ -30,42 +34,32 @@ void ChorusEffect::SetRate(double rate)
     m_rate = rate;
 }
 
-void ChorusEffect::SetWet(double wetLevel)
-{
-    m_wetLevel = wetLevel;
-}
-
-void ChorusEffect::SetDry(double dryLevel)
-{
-    m_dryLevel = dryLevel;
-}
-
 void ChorusEffect::Process(double* input, double* output)
 {
     for (int c = 0; c < 2; ++c)
     {
-        // Write input sample to delay buffer
-        m_delayBuffer[c].push_back(input[c]);
+        // Write current sample to delay buffer at write index
+        m_delayBuffer[c][m_writeIndex] = input[c];
 
-        // Remove oldest sample if buffer is too large
-        if (m_delayBuffer[c].size() > m_bufferSize)
-        {
-            m_delayBuffer[c].erase(m_delayBuffer[c].begin());
-        }
+        // Calculate the modulated delay time
+        double modulatedDelay = m_depth * (1.0 + sin(2 * pi * m_phase)) / 2.0;
+        size_t intDelay = static_cast<size_t>(modulatedDelay);
+        double fracDelay = modulatedDelay - intDelay;
 
-        // Calculate modulated delay time
-        double modulatedDelay = m_depth * (1.0 + sin(2 * M_PI * m_phase)) / 2.0;
-        size_t delaySamples = static_cast<size_t>(modulatedDelay);
+        // Calculate read index, wrapping if necessary
+        size_t readIndex = (m_writeIndex + m_bufferSize - intDelay) % m_bufferSize;
+        size_t nextReadIndex = (readIndex + 1) % m_bufferSize;
 
-        // Read delayed sample
-        size_t readIndex = m_delayBuffer[c].size() > delaySamples ? m_delayBuffer[c].size() - 1 - delaySamples : 0;
-        double delayedSample = m_delayBuffer[c][readIndex];
+        // Interpolate between the delay buffer samples for a smooth output
+        double delayedSample = (1.0 - fracDelay) * m_delayBuffer[c][readIndex] +
+            fracDelay * m_delayBuffer[c][nextReadIndex];
 
         // Combine dry and wet signals
-        output[c] = m_dryLevel * input[c] + m_wetLevel * delayedSample;
+        output[c] = dryLevel * input[c] + wetLevel * delayedSample;
     }
 
-    // Advance phase
+    // Advance write index and phase
+    m_writeIndex = (m_writeIndex + 1) % m_bufferSize;
     m_phase += m_rate / m_sampleRate;
     if (m_phase >= 1.0)
     {

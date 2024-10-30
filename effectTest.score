@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="4">
+    <instrument instrument="ToneInstrument">
+        <note measure="1" beat="1" duration="1.5" gain="1" note="Bb4">
+        </note>
+        <note measure="2" beat="1.5" duration="1.5" gain="0" note="Bb4">
+           <effect which="noise-gate" wet="1.0" dry="0.0"/> <!-- Only noise-gate effect is heard -->
+        </note>
+        <note measure="3" beat="2" duration="1.5" gain="0" note="Bb4">
+           <effect which="chorus" wet="1.0" dry="0.0"/> <!-- Isolated chorus effect -->
+        </note>
+        <note measure="4" beat="2.5" duration="1.5" gain="0" note="Bb4">
+           <effect which="compressor" wet="1.0" dry="0.0"/> <!-- Only reverb effect goes through -->
+        </note>
+        <note measure="5" beat="1" duration="3.0" gain="0" note="Bb4">
+           <effect which="flanger" wet="1.0" dry="0.0"/> <!-- Isolated flanger effect -->
+        </note>
+        <note measure="6" beat="2" duration="1.0" gain="1" note="Bb4">
+        </note>
+        <note measure="7" beat="1" duration="2.75" gain="1" note="Bb4">
+        </note>
+    </instrument>
+</score>

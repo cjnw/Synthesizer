@@ -2,6 +2,7 @@
 #include "Synthesizer.h"
 #include "Instrument.h"
 #include "ToneInstrument.h"
+#include "CAdditiveSynthesizer.h"
 #include "xmlhelp.h"
 #include <vector>
 #include <algorithm>
@@ -152,6 +153,10 @@ bool CSynthesizer::Generate(double * frame)
 		else if (note->Instrument() == L"Organ")
 		{
 			instrument = new COrgan();
+		}
+		else if (note->Instrument() == L"Additive")
+		{
+			instrument = new CAdditiveSynthesizer(600);
 		}
 		// Configure the instrument object
 		if (instrument != NULL)

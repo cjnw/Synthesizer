@@ -1,36 +1,57 @@
 #pragma once
-
-#include <vector>
-#include <map>
-#include "Sample.h"
-#include "Dynamics.h"
-#include "Envelope.h"
-#include "Pedal.h"
-#include "Polyphony.h"
 #include "Instrument.h"
+#include "Sample.h"
+#include <map>
+#include <vector>
 
-class CPianoInstrument : public CInstrument {
+class CPianoInstrument : public CInstrument
+{
 public:
+    CPianoInstrument();
     CPianoInstrument(int maxVoices);
-    ~CPianoInstrument();
+    virtual ~CPianoInstrument();
 
-    void LoadSample(const std::wstring& filename, int midiNote);
-    void StartNote(int midiNote, double velocity);
-    void StopNote(int midiNote);
+    virtual void Start() override;
+    virtual bool Generate() override;
+    virtual void SetNote(CNote* note) override;
+
     void SetPedal(bool pressed);
-    void Generate(double* frame, int channels);
-    void SetDynamicRange(double minLevel, double maxLevel);
-    void SetEnvelope(double attack, double release);
-    void SetNote(CNote* note) override;
-    void Start() override;
-    bool Generate() override;
+    void LoadSample(const std::wstring& filename, int midiNote);
 
 private:
-    std::map<int, Sample> m_samples;
-    Polyphony m_polyphony;
-    Pedal m_pedal;
-    Dynamics m_dynamics;
-    Envelope m_envelope;
+    struct Voice {
+        Sample sample;
+        double velocity;
+        double duration;
+        bool active;
+    };
+
+    // Piano-related attributes
+    std::map<int, Sample> m_samples;  // MIDI note to Sample mapping
+    std::vector<Voice> m_voices;      // Active voices for polyphony
+    int m_maxVoices;
+
+    // Envelope and dynamics
+    double m_attack;
+    double m_release;
+    double m_time;
+
+    // Pedal and effects
+    bool m_isPedalPressed;
+    Sample m_pedalDownNoise;
+    Sample m_pedalUpNoise;
+
+    // Frame buffer for stereo output
+    double m_frame[2];
+
+    // Pointer to the current note
     CNote* m_currentNote;
-    double m_time = 0.0;
+
+    // Internal helper methods
+    void StartNote(int midiNote, double velocity);
+    void AddVoice(Sample& sample, double velocity, double duration);
+    double ApplyDynamics(double input, double velocity);
+    double ApplyEnvelope(double time);
+    bool IsEnvelopeActive(double time) const;
+    void GeneratePedalNoise(bool isPressing);
 };

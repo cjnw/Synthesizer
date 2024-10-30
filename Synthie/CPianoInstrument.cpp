@@ -1,76 +1,67 @@
 #include "stdafx.h"
 #include "CPianoInstrument.h"
-#include <iostream>
+#include "Note.h"
+
+CPianoInstrument::CPianoInstrument()
+    : m_maxVoices(16), m_attack(0.05), m_release(0.05), m_time(0), m_isPedalPressed(false)
+{
+    m_voices.resize(m_maxVoices);
+    m_frame[0] = m_frame[1] = 0.0;
+}
 
 CPianoInstrument::CPianoInstrument(int maxVoices)
-    : CInstrument(), m_polyphony(maxVoices), m_envelope(0.05, 0.05), m_currentNote(nullptr)
+    : m_maxVoices(maxVoices), m_attack(0.05), m_release(0.05), m_time(0), m_isPedalPressed(false)
 {
+    m_voices.resize(m_maxVoices);
+    m_frame[0] = m_frame[1] = 0.0;
 }
 
-CPianoInstrument::~CPianoInstrument() {
-}
+CPianoInstrument::~CPianoInstrument() {}
 
 void CPianoInstrument::LoadSample(const std::wstring& filename, int midiNote) {
-    Sample sample;
-    if (sample.Load(filename)) {
-        m_samples[midiNote] = sample;
-    }
-}
-
-void CPianoInstrument::StartNote(int midiNote, double velocity) {
-    if (m_samples.find(midiNote) != m_samples.end()) {
-        m_envelope.Start(1.0);
-        m_polyphony.AddVoice(m_samples[midiNote], velocity, 1.0);
-    }
-}
-
-void CPianoInstrument::StopNote(int midiNote) {
-    m_polyphony.StopVoice(midiNote);
-}
-
-void CPianoInstrument::SetPedal(bool pressed) {
-    if (pressed) {
-        m_pedal.Press();
-        m_pedal.GetNoise(true).Start();
-    }
-    else {
-        m_pedal.Release();
-        m_pedal.GetNoise(false).Start();
-    }
-}
-
-void CPianoInstrument::Generate(double* frame, int channels) {
-    double time = 0;
-    for (int i = 0; i < channels; ++i) {
-        frame[i] = 0;
-    }
-
-    m_polyphony.Generate(frame, channels);
-
-    for (int i = 0; i < channels; ++i) {
-        frame[i] = m_dynamics.ApplyDynamics(frame[i]);
-    }
-
-    double envelopeValue = m_envelope.Apply(time);
-    for (int i = 0; i < channels; ++i) {
-        frame[i] *= envelopeValue;
-    }
-
-    if (m_pedal.IsPressed()) {
-        double noiseFrame[2] = { 0.0, 0.0 };
-        m_pedal.GenerateNoiseFrame(noiseFrame, true, channels);
-        for (int i = 0; i < channels; ++i) {
-            frame[i] += noiseFrame[i];
+    if (midiNote >= 21 && midiNote <= 108) {
+        Sample sample;
+        if (sample.Load(filename)) {
+            m_samples[midiNote] = sample;
         }
     }
 }
 
-void CPianoInstrument::SetDynamicRange(double minLevel, double maxLevel) {
-    m_dynamics.SetDynamicRange(minLevel, maxLevel);
+void CPianoInstrument::Start() {
+    m_time = 0;
+    m_frame[0] = m_frame[1] = 0.0;
+    if (m_currentNote) {
+        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
+    }
 }
 
-void CPianoInstrument::SetEnvelope(double attack, double release) {
-    m_envelope = Envelope(attack, release);
+bool CPianoInstrument::Generate() {
+    // Reset m_frame for stereo output
+    m_frame[0] = 0.0;
+    m_frame[1] = 0.0;
+
+    // Generate samples for all active voices
+    for (auto& voice : m_voices) {
+        if (voice.active) {
+            double sampleValue = voice.sample.Generate();
+            m_frame[0] += ApplyDynamics(sampleValue, voice.velocity);
+            m_frame[1] += ApplyDynamics(sampleValue, voice.velocity);
+            voice.duration -= m_samplePeriod;
+            if (voice.duration <= 0) voice.active = false;
+        }
+    }
+
+    // Apply envelope to the frame
+    double envelopeValue = ApplyEnvelope(m_time);
+    m_frame[0] *= envelopeValue;
+    m_frame[1] *= envelopeValue;
+
+    // Apply pedal noise if pressed
+    if (m_isPedalPressed) GeneratePedalNoise(true);
+
+    // Update time for envelope progression
+    m_time += m_samplePeriod;
+    return IsEnvelopeActive(m_time);
 }
 
 void CPianoInstrument::SetNote(CNote* note) {
@@ -80,15 +71,48 @@ void CPianoInstrument::SetNote(CNote* note) {
     }
 }
 
-void CPianoInstrument::Start() {
-    if (m_currentNote) {
-        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
+void CPianoInstrument::SetPedal(bool pressed) {
+    m_isPedalPressed = pressed;
+    GeneratePedalNoise(pressed);
+}
+
+void CPianoInstrument::StartNote(int midiNote, double velocity) {
+    // Check if the MIDI note is mapped to a sample
+    if (m_samples.find(midiNote) != m_samples.end()) {
+        Sample& sample = m_samples[midiNote];
+        AddVoice(sample, velocity, 1.0);  // Adding the note with a default duration of 1.0 seconds
     }
 }
 
-bool CPianoInstrument::Generate() {
-    double frame[2] = { 0.0, 0.0 };
-    Generate(frame, 2);
-    m_time += 1.0 / 44100.0;
-    return m_envelope.IsActive(m_time);
+void CPianoInstrument::AddVoice(Sample& sample, double velocity, double duration) {
+    for (auto& voice : m_voices) {
+        if (!voice.active) {
+            voice.sample = sample;
+            voice.velocity = velocity;
+            voice.duration = duration;
+            voice.active = true;
+            break;
+        }
+    }
+}
+
+double CPianoInstrument::ApplyDynamics(double input, double velocity) {
+    double minLevel = 0.0, maxLevel = 1.0;
+    return (input * velocity < minLevel) ? minLevel : (input * velocity > maxLevel) ? maxLevel : input * velocity;
+}
+
+double CPianoInstrument::ApplyEnvelope(double time) {
+    if (time < m_attack) return time / m_attack;
+    else if (time > 1.0 - m_release) return (1.0 - time) / m_release;
+    return 1.0;
+}
+
+bool CPianoInstrument::IsEnvelopeActive(double time) const {
+    return time < 1.0;
+}
+
+void CPianoInstrument::GeneratePedalNoise(bool isPressing) {
+    double noise = isPressing ? m_pedalDownNoise.Generate() : m_pedalUpNoise.Generate();
+    m_frame[0] += noise;
+    m_frame[1] += noise;
 }

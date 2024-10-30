@@ -28,9 +28,9 @@ void Polyphony::StopVoice(int index) {
 void Polyphony::Generate(double* frame, int channels) {
     for (auto& voice : m_voices) {
         if (voice.active) {
-            double sampleValue = voice.sample.Generate(); 
+            double sampleValue = voice.sample.Generate();
             for (int i = 0; i < channels; i++) {
-                frame[i] += sampleValue; 
+                frame[i] += sampleValue;
             }
 
             voice.duration -= 1.0 / 44100.0;
@@ -40,5 +40,3 @@ void Polyphony::Generate(double* frame, int channels) {
         }
     }
 }
-
-

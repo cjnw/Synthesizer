@@ -6,12 +6,20 @@ using namespace std;
 #include "Instrument.h"
 #include "Note.h"
 #include "Effect.h"
+
 class CSynthesizer
 {
 public:
 	CSynthesizer();
 	virtual ~CSynthesizer();
 public:
+	// Expose scratch methods through Synthie
+	void BabyScratch(float speed);
+	void ScribbleScratch();
+	void ChirpScratch();
+	void TransformScratch();
+	void OrbitScratch();
+
 	//! Number of audio channels
 	int GetNumChannels() { return m_channels; }
 

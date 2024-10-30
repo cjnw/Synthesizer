@@ -96,15 +96,14 @@ void CDrums::SetDrumType(const std::wstring& type)
     }
     else if (type == L"bass")
     {
-        // Strong, punchy frequency sweep for the bass drum
-        m_reson.SetStartFrequency(120.0);   // Start frequency for a punchy bass
-        m_reson.SetEndFrequency(40.0);      // End at very low frequency for depth
-        m_reson.SetBandwidth(100.0);        // Narrow bandwidth for a focused low-end sound
-        m_duration = 0.3;                   // Adjust duration for more decay
+        m_reson.SetStartFrequency(70.0);     // Start frequency lower for more bass
+        m_reson.SetEndFrequency(35.0);       // End frequency in sub-bass range
+        m_reson.SetBandwidth(40.0);          // Narrow bandwidth for focused low end
+        m_duration = 0.35;                   // Slightly longer duration for sustained bass
 
-        // Envelope with a fast attack and moderate decay for bass drum resonance
-        m_ar.SetAttack(0.001);              // Very fast attack for punch
-        m_ar.SetRelease(0.28);              // Slightly longer release for resonance
+        // Adjust envelope for a slightly longer decay to sustain bass frequencies
+        m_ar.SetAttack(0.001);               // Immediate attack for punch
+        m_ar.SetRelease(0.34); // Slightly longer release for resonance
     }
 
     else if (type == L"high_tom")
@@ -143,6 +142,18 @@ void CDrums::SetDrumType(const std::wstring& type)
         // Cymbal-specific envelope
         m_ar.SetAttack(0.0);
         m_ar.SetRelease(1.0);  // Longer release for cymbals
+    }
+    else if (type == L"hi_hat")
+    {
+        // Hi-Hat settings for a crisp, high-pitched sound
+        m_reson.SetStartFrequency(8000.0);    // High frequency for hi-hat "chick" sound
+        m_reson.SetEndFrequency(6000.0);      // Slightly lower end frequency for a quick decay
+        m_reson.SetBandwidth(1000.0);         // Narrow bandwidth for a tight sound
+        m_duration = 0.1;                     // Very short duration for closed hi-hat
+
+        // Envelope settings for hi-hat
+        m_ar.SetAttack(0.001);                // Immediate attack
+        m_ar.SetRelease(0.099);               // Quick release to match short duration
     }
 
 }

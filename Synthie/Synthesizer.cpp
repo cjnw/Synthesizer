@@ -466,3 +466,5 @@ void CSynthesizer::XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument)
 	m_notes.push_back(CNote());
 	m_notes.back().XmlLoad(xml, instrument);
 }
+
+

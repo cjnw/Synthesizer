@@ -50,7 +50,3 @@ bool CAR::Generate()
 }
 
 
-void CAR::SetAttack(double attack)
-{
-	m_attack = attack;
-}

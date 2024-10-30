@@ -4,20 +4,31 @@
 #include "Polyphony.h"
 #include "Sample.h"
 #include "SineWave.h"
+#include "ToneInstrument.h"
+#include "Notes.h"
 #include <vector>
 #include <utility> // for std::pair
+#include "Instrument.h"
+#include <SineWave.h>
+#include <AR.h>
 
-class AdditiveSynthesizer {
+
+class AdditiveSynthesizer : CToneInstrument {
 public:
-    AdditiveSynthesizer(double fundamentalFrequency, const std::vector<float>& harmonics);
-    void Play(double duration);
-    void Stop();
-    void Generate(double* frame, int channels);
+    void AddNote(CNote* c);
 
 private:
-    std::vector<CSineWave> m_harmonics;
-    double m_sampleRate;
-    bool m_playing;
+	std::vector<CSineWave> m_sinewaves;
+	CSineWave m_sinewave;
+	CAR m_ar;
+	double m_frequency;
+	double m_duration;
+	std::wstring m_drawbars;
+	double m_time;
+	double m_vibratoDepth;
+	double m_vibratoPhaseIncrement;
+	double m_vibratoRate;
+	double m_vibratoPhase;
 };
 
 #endif

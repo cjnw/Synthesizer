@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="4">
+  <instrument instrument="Organ">
+    <note measure="1" beat="1" duration="2" note="C3" drawbars="805020000"/>
+    <note measure="2" beat="1" duration="2" note="E3" drawbars="005000000"/>
+    <note measure="3" beat="1" duration="2" note="G3" drawbars="088800000"/>
+    <note measure="4" beat="1" duration="4" note="C4" drawbars="800000800"/> 
+  </instrument>
+</score>

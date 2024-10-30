@@ -10,12 +10,22 @@ COrgan::COrgan()
     m_frequency = 0;
     m_vibratoDepth = 0.1; // Default vibrato depth
     m_vibratoRate = 5;   // Default vibrato rate in Hz
+
+    // Initialize sine wave generators for each harmonic
+    for (int i = 0; i < 9; i++) {
+        m_sinewaves.push_back(CSineWave());
+    }
 }
 
 COrgan::COrgan(int bpm)
 {
 	m_duration = 0.1;
 	m_bpm = bpm;
+
+    // Initialize sine wave generators for each harmonic
+    for (int i = 0; i < 9; i++) {
+        m_sinewaves.push_back(CSineWave());
+    }
 }
 
 COrgan::~COrgan()
@@ -51,7 +61,8 @@ bool COrgan::Generate()
             int drawbarValue = m_drawbars[i] - '0'; // Convert character to integer
             if (drawbarValue > 0)
             {
-                amplitudes[i] = pow(10, -0.3 * (8 - drawbarValue)); // Calculate amplitude based on drawbar value
+                double dbReduction = -3 * (8 - drawbarValue);
+                amplitudes[i] = pow(10, dbReduction / 20.0); // Calculate amplitude based on drawbar value
             }
         }
     }
@@ -69,14 +80,14 @@ bool COrgan::Generate()
     double sampleR = 0;
     for (int i = 0; i < 9; i++)
     {
-        m_sinewave.SetFreq(m_frequency * harmonics[i] * vibrato);
-        m_sinewave.Generate();
-        sampleL += amplitudes[i] * m_sinewave.Frame(0);
-        sampleR += amplitudes[i] * m_sinewave.Frame(1);
+        m_sinewaves[i].SetFreq(m_frequency * harmonics[i] * vibrato);
+        m_sinewaves[i].Generate();  // Generate the sine wave
+        sampleL += amplitudes[i] * m_sinewaves[i].Frame(0); // Add to the output
+        sampleR += amplitudes[i] * m_sinewaves[i].Frame(1);
     }
 
     // Apply envelope
-    m_ar.Generate();
+    bool valid = m_ar.Generate();
     m_ar.SetDuration(m_duration);
     double envelope1 = m_ar.Frame(0);
     double envelope2 = m_ar.Frame(1);
@@ -90,7 +101,7 @@ bool COrgan::Generate()
     m_time += GetSamplePeriod();
 
     // Check if the note duration is complete
-    return m_time < m_duration;
+    return valid;
 }
 
 void COrgan::SetNote(CNote* note)
@@ -141,5 +152,4 @@ void COrgan::SetNote(CNote* note)
     // Apply attack and release envelope
     m_ar.SetAttack(0.01);  // Attack time in seconds
     m_ar.SetRelease(0.01); // Release time in seconds
-    m_ar.SetDuration(m_duration);
 }

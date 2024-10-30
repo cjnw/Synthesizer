@@ -20,6 +20,7 @@ public:
 	void SetDuration(double d) { m_duration = d; }
 	virtual void SetNote(CNote* note);
 private:
+	std::vector<CSineWave> m_sinewaves;
 	CSineWave m_sinewave;
 	CAR m_ar;
 	double m_frequency;

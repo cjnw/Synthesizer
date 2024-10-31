@@ -55,6 +55,7 @@ void CSynthesizer::Start()
 	m_measure = 0;
 	m_beat = 0;
 	m_time = 0;
+	//m_pianoinstfactory.Interpolate(0.34);
 
 
 	m_flanger->SetSampleRate(GetSampleRate());
@@ -142,7 +143,7 @@ bool CSynthesizer::Generate(double * frame)
 
 		else if (note->Instrument() == L"PianoInstrument")
 		{
-			instrument = new CPianoInstrument(16);
+			instrument = new CPianoInstrument();
 		}
 
 		else if (note->Instrument() == L"Drums")

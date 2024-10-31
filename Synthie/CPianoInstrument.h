@@ -1,36 +1,62 @@
 #pragma once
-
-#include <vector>
-#include <map>
-#include "Sample.h"
-#include "Dynamics.h"
-#include "Envelope.h"
-#include "Pedal.h"
-#include "Polyphony.h"
 #include "Instrument.h"
+#include "SineWave.h"
+#include "AR.h"
 
-class CPianoInstrument : public CInstrument {
+class CPianoInstrument : public CInstrument
+{
 public:
-    CPianoInstrument(int maxVoices);
-    ~CPianoInstrument();
+    CPianoInstrument();
+    CPianoInstrument(double bpm);
+    virtual ~CPianoInstrument();
 
-    void LoadSample(const std::wstring& filename, int midiNote);
-    void StartNote(int midiNote, double velocity);
-    void StopNote(int midiNote);
-    void SetPedal(bool pressed);
-    void Generate(double* frame, int channels);
-    void SetDynamicRange(double minLevel, double maxLevel);
-    void SetEnvelope(double attack, double release);
-    void SetNote(CNote* note) override;
-    void Start() override;
-    bool Generate() override;
+    const double NUM_SECS_IN_MINUTE = 60.0;
+    virtual void Start();
+    virtual bool Generate();
+
+    void SetFreq(double f) { m_sinewave.SetFreq(f); }
+    void SetAmplitude(double a) { m_sinewave.SetAmplitude(a); }
+    void SetDuration(double d) { m_duration = d; }
+    virtual void SetNote(CNote* note);
 
 private:
-    std::map<int, Sample> m_samples;
-    Polyphony m_polyphony;
-    Pedal m_pedal;
-    Dynamics m_dynamics;
-    Envelope m_envelope;
-    CNote* m_currentNote;
-    double m_time = 0.0;
+    CSineWave m_sinewave;
+    CAR m_ar;
+    double m_duration;
+    double m_time;
+    double m_bpm;
 };
+
+//#pragma once
+//#include "instrument.h"
+//#include "PianoWave.h"
+//#include "Notes.h"
+//#include "Envelope.h"
+//
+//class CPianoInstrument :
+//	public CInstrument
+//{
+//public:
+//	CPianoInstrument(void);
+//	~CPianoInstrument(void);
+//	std::wstring Name() const { return L"Piano"; }
+//
+//public:
+//	virtual void Start();
+//	virtual bool Generate();
+//
+//	void SetFreq(double f) { m_pianowave.SetFreq(f); }
+//	void SetAmplitude(double a) { m_pianowave.SetAmplitude(a); }
+//	void SetDuration(double d) { m_ar.SetDuration(d); }
+//	void SetNote(CNote* note);
+//	void Sustain(bool s) { m_ar.Sustain(s); }
+//	CPianoWave* GetPlayer() { return &m_pianowave; }
+//	void GetFrame(double frame[2]) { frame[0] = m_frame[0]; frame[1] = m_frame[1]; }
+//
+//
+//private:
+//	CPianoWave m_pianowave;
+//	double m_duration;
+//	double m_time;
+//	Envelope m_ar;
+//};

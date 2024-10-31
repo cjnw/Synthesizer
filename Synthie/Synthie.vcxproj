@@ -156,6 +156,8 @@
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="Notes.cpp" />
     <ClCompile Include="Pedal.cpp" />
+    <ClCompile Include="PianoInstrumentFactory.cpp" />
+    <ClCompile Include="PianoWave.cpp" />
     <ClCompile Include="Polyphony.cpp" />
     <ClCompile Include="Progress.cpp" />
     <ClCompile Include="ProgressDlg.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="Note.h" />
     <ClInclude Include="Notes.h" />
     <ClInclude Include="Pedal.h" />
+    <ClInclude Include="PianoInstrumentFactory.h" />
+    <ClInclude Include="PianoWave.h" />
     <ClInclude Include="Polyphony.h" />
     <ClInclude Include="Progress.h" />
     <ClInclude Include="ProgressDlg.h" />

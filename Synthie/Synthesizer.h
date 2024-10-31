@@ -6,6 +6,7 @@ using namespace std;
 #include "Instrument.h"
 #include "Note.h"
 #include "Effect.h"
+#include "PianoInstrumentFactory.h"
 
 class CSynthesizer
 {
@@ -65,6 +66,7 @@ private:
 	Effect* m_compressor;
 	Effect* m_chorus;
 	Effect* m_flanger;
+	//CPianoInstrumentFactory m_pianoinstfactory;
 
 
 public:

@@ -1,94 +1,168 @@
 #include "stdafx.h"
 #include "CPianoInstrument.h"
-#include <iostream>
+#include "Notes.h"
 
-CPianoInstrument::CPianoInstrument(int maxVoices)
-    : CInstrument(), m_polyphony(maxVoices), m_envelope(0.05, 0.05), m_currentNote(nullptr)
+CPianoInstrument::CPianoInstrument()
+{
+    m_duration = 0.1;
+}
+
+CPianoInstrument::CPianoInstrument(double bpm)
+{
+    m_duration = 0.1;
+    m_bpm = bpm;
+}
+
+CPianoInstrument::~CPianoInstrument()
 {
 }
 
-CPianoInstrument::~CPianoInstrument() {
+void CPianoInstrument::Start()
+{
+    m_sinewave.SetSampleRate(GetSampleRate());
+    m_sinewave.Start();
+    m_ar.SetSource(&m_sinewave);
+    m_ar.SetSampleRate(GetSampleRate());
+    m_ar.SetAttack(0.01); // Attack time in seconds
+    m_ar.SetRelease(m_duration); // Release over the duration
+    m_ar.SetDuration(m_duration); // Total duration equals release time
+    m_ar.Start();
+    m_time = 0;
 }
 
-void CPianoInstrument::LoadSample(const std::wstring& filename, int midiNote) {
-    Sample sample;
-    if (sample.Load(filename)) {
-        m_samples[midiNote] = sample;
-    }
+bool CPianoInstrument::Generate()
+{
+    bool valid = m_ar.Generate();
+
+    // Generate the piano sound
+    m_frame[0] = m_ar.Frame(0);
+    m_frame[1] = m_ar.Frame(1);
+
+    // Advance time
+    m_time += GetSamplePeriod();
+
+    // Check if the note duration is complete
+    return valid;
 }
 
-void CPianoInstrument::StartNote(int midiNote, double velocity) {
-    if (m_samples.find(midiNote) != m_samples.end()) {
-        m_envelope.Start(1.0);
-        m_polyphony.AddVoice(m_samples[midiNote], velocity, 1.0);
-    }
-}
+void CPianoInstrument::SetNote(CNote* note)
+{
+    // Retrieve attributes from the note
+    CComPtr<IXMLDOMNamedNodeMap> attributes;
+    note->Node()->get_attributes(&attributes);
+    long len;
+    attributes->get_length(&len);
 
-void CPianoInstrument::StopNote(int midiNote) {
-    m_polyphony.StopVoice(midiNote);
-}
+    for (int i = 0; i < len; i++)
+    {
+        CComPtr<IXMLDOMNode> attrib;
+        attributes->get_item(i, &attrib);
 
-void CPianoInstrument::SetPedal(bool pressed) {
-    if (pressed) {
-        m_pedal.Press();
-        m_pedal.GetNoise(true).Start();
-    }
-    else {
-        m_pedal.Release();
-        m_pedal.GetNoise(false).Start();
-    }
-}
+        CComBSTR name;
+        attrib->get_nodeName(&name);
 
-void CPianoInstrument::Generate(double* frame, int channels) {
-    double time = 0;
-    for (int i = 0; i < channels; ++i) {
-        frame[i] = 0;
-    }
+        CComVariant value;
+        attrib->get_nodeValue(&value);
 
-    m_polyphony.Generate(frame, channels);
-
-    for (int i = 0; i < channels; ++i) {
-        frame[i] = m_dynamics.ApplyDynamics(frame[i]);
-    }
-
-    double envelopeValue = m_envelope.Apply(time);
-    for (int i = 0; i < channels; ++i) {
-        frame[i] *= envelopeValue;
-    }
-
-    if (m_pedal.IsPressed()) {
-        double noiseFrame[2] = { 0.0, 0.0 };
-        m_pedal.GenerateNoiseFrame(noiseFrame, true, channels);
-        for (int i = 0; i < channels; ++i) {
-            frame[i] += noiseFrame[i];
+        if (name == L"duration")
+        {
+            value.ChangeType(VT_R8);
+            m_duration = value.dblVal;
+            m_ar.SetDuration(m_duration);
+        }
+        else if (name == L"note")
+        {
+            SetFreq(NoteToFrequency(value.bstrVal));
         }
     }
 }
 
-void CPianoInstrument::SetDynamicRange(double minLevel, double maxLevel) {
-    m_dynamics.SetDynamicRange(minLevel, maxLevel);
-}
-
-void CPianoInstrument::SetEnvelope(double attack, double release) {
-    m_envelope = Envelope(attack, release);
-}
-
-void CPianoInstrument::SetNote(CNote* note) {
-    m_currentNote = note;
-    if (m_currentNote) {
-        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
-    }
-}
-
-void CPianoInstrument::Start() {
-    if (m_currentNote) {
-        StartNote(m_currentNote->GetPitch(), m_currentNote->GetVelocity());
-    }
-}
-
-bool CPianoInstrument::Generate() {
-    double frame[2] = { 0.0, 0.0 };
-    Generate(frame, 2);
-    m_time += 1.0 / 44100.0;
-    return m_envelope.IsActive(m_time);
-}
+//#include "StdAfx.h"
+//#include "CPianoInstrument.h"
+//
+//CPianoInstrument::CPianoInstrument(void)
+//{
+//    m_duration = 0.1;
+//}
+//
+//CPianoInstrument::~CPianoInstrument(void)
+//{
+//}
+//void CPianoInstrument::Start()
+//{
+//    m_pianowave.SetSampleRate(GetSampleRate());
+//    m_pianowave.Start();
+//    m_time = 0;
+//
+//    // Tell the AR object it gets its samples from 
+//    // the pianowave object.
+//    m_ar.SetSource(&m_pianowave);
+//    m_ar.SetSampleRate(GetSampleRate());
+//    m_ar.Start();
+//
+//}
+//
+//
+//bool CPianoInstrument::Generate()
+//{
+//    // Tell the component to generate an audio sample
+//    m_pianowave.Generate();
+//    bool valid = m_ar.Generate();
+//
+//    // Read the component's sample and make it our resulting frame.
+//    m_frame[0] = m_ar.Frame(0);
+//    m_frame[1] = m_ar.Frame(1);
+//
+//    // Update time
+//    m_time += GetSamplePeriod();
+//    return valid;
+//}
+//void CPianoInstrument::SetNote(CNote* note)
+//{
+//    // Get a list of all attribute nodes and the
+//    // length of that list
+//    CComPtr<IXMLDOMNamedNodeMap> attributes;
+//    note->Node()->get_attributes(&attributes);
+//    long len;
+//    attributes->get_length(&len);
+//
+//    // Loop over the list of attributes
+//    for (int i = 0; i < len; i++)
+//    {
+//        // Get attribute i
+//        CComPtr<IXMLDOMNode> attrib;
+//        attributes->get_item(i, &attrib);
+//
+//        // Get the name of the attribute
+//        CComBSTR name;
+//        attrib->get_nodeName(&name);
+//
+//        // Get the value of the attribute.  A CComVariant is a variable
+//        // that can have any type. It loads the attribute value as a
+//        // string (UNICODE), but we can then change it to an integer 
+//        // (VT_I4) or double (VT_R8) using the ChangeType function 
+//        // and then read its integer or double value from a member variable.
+//        CComVariant value;
+//        attrib->get_nodeValue(&value);
+//
+//        if (name == "duration")
+//        {
+//            value.ChangeType(VT_R8);
+//            SetDuration(value.dblVal);
+//        }
+//        else if (name == "note")
+//        {
+//            SetFreq(NoteToFrequency(value.bstrVal));
+//        }
+//        else if (name == "attack")
+//        {
+//            value.ChangeType(VT_R8);
+//            m_ar.SetAttack(value.dblVal);
+//        }
+//        else if (name == "release")
+//        {
+//            value.ChangeType(VT_R8);
+//            m_ar.SetRelease(value.dblVal);
+//        }
+//    }
+//}

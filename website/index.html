@@ -123,6 +123,38 @@
     </div>
 </div>
 
+<!-- Effects Component Section -->
+<div class="component-section">
+    <div class="component-header">
+        <h3>Effects Component</h3>
+        <p>Owned by: Omar</p>
+    </div>
+    <p>
+        The effects component processes audio with effects like noise gate, flanger, chorus, and compressor, enhancing spatial depth.
+        This component receives streamed audio frames from the other mentioned components such as piano and/or drums, and applies effects.
+        We utilized other parameters such as wet and dry to determine the output that our frame will receive.
+        When determining the structure of our score file, we initially thought that applying effects on an entire score would be fine, but we later ended up processing effects on a note-by-note basis.
+        Each note can have multiple effects, and we process them in parallel.
+    </p>
+    <h4>Supported Grading Elements:</h4>
+    <ul>
+        <li>Audio passes through component</li>
+        <li>1 Effect</li>
+        <li>3 Effects</li>
+        <li>Controllable effects send</li>
+        <li>4 Effects (Noise Gate, Flanger, Chorus, Compressor)</li>
+    </ul>
+    <div class="download-link">
+        <a href="effects.score" download>Download Effects Score File</a>
+    </div>
+    <div class="audio-player">
+        <audio controls>
+            <source src="effects.wav"  type="audio/x-wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
 <!-- Organ Component Section -->
 <div class="component-section">
     <div class="component-header">
@@ -205,37 +237,6 @@
     </div>
 </div>
 
-<!-- Effects Component Section -->
-<div class="component-section">
-    <div class="component-header">
-        <h3>Effects Component</h3>
-        <p>Owned by: Omar</p>
-    </div>
-    <p>
-        The effects component processes audio with effects like noise gate, flanger, chorus, and compressor, enhancing spatial depth.
-        This component receives streamed audio frames from the other mentioned components such as piano and/or drums, and applies effects.
-        We utilized other parameters such as wet and dry to determine the output that our frame will receive.
-        When determining the structure of our score file, we initially thought that applying effects on an entire score would be fine, but we later ended up processing effects on a note-by-note basis.
-        Each note can have multiple effects, and we process them in parallel.
-    </p>
-    <h4>Supported Grading Elements:</h4>
-    <ul>
-        <li>Audio passes through component</li>
-        <li>1 Effect</li>
-        <li>3 Effects</li>
-        <li>Controllable effects send</li>
-        <li>4 Effects (Noise Gate, Flanger, Chorus, Compressor)</li>
-    </ul>
-    <div class="download-link">
-        <a href="effects.score" download>Download Effects Score File</a>
-    </div>
-    <div class="audio-player">
-        <audio controls>
-            <source src="effects.wav"  type="audio/x-wav">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
-</div>
 
 </body>
 </html>

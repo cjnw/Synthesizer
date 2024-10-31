@@ -23,7 +23,8 @@ void CAdditiveSynthesizer::Start()
     m_ar.SetSampleRate(GetSampleRate());
     m_ar.Start();
     m_time = 0;
-
+    m_vibratoRate = 5;
+    m_vibratoDepth = .05;
     // Calculate vibrato phase increment
     m_vibratoPhaseIncrement = 2 * M_PI * m_vibratoRate / GetSampleRate();
     m_vibratoPhase = 0;

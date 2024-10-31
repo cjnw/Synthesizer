@@ -33,8 +33,8 @@ bool CAdditiveSynthesizer::Generate()
 {
 
     // Calculate the fundamental frequency and harmonics
-    double harmonics[] = { 1, 3, 2, 4, 6, 8, 10, 12, 16 }; // Harmonic multipliers
-    double amplitudes[9] = { 0 };
+    double harmonics[] = { 1,2,3,4,5,6,7,8,9}; // Harmonic multipliers
+    
 
     // Calculate vibrato effect
     double vibrato = 1 + m_vibratoDepth * sin(m_vibratoPhase);
@@ -50,10 +50,10 @@ bool CAdditiveSynthesizer::Generate()
     int l = m_sinewaves.size();
     for (int i = 0; i < l; i++)
     {
-        m_sinewaves[i].SetFreq(m_frequency * harmonics[i] * vibrato);
+        m_sinewaves[i].SetFreq(m_fundamental_frequency * harmonics[i] * vibrato);
         m_sinewaves[i].Generate();  // Generate the sine wave
-        sampleL += amplitudes[i] * m_sinewaves[i].Frame(0); // Add to the output
-        sampleR += amplitudes[i] * m_sinewaves[i].Frame(1);
+        sampleL += nums[i] * m_sinewaves[i].Frame(0); // Add to the output
+        sampleR += nums[i] * m_sinewaves[i].Frame(1);
     }
 
     // Apply envelope
